@@ -12,5 +12,9 @@
   "devDependencies": {
     "chromedriver": "^109.0.0",
     "selenium-webdriver": "^4.8.0"
+  },
+  "dependencies": {
+    "ChromeDriver": "npm:chromedriver@^109.0.0",
+    "selenium": "^2.20.0"
   }
 }
