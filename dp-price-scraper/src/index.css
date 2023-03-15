@@ -17,6 +17,15 @@ head {
   grid-row: 1/2;
 }
 
+.page{
+  grid-column: 2/3;
+  grid-row: 1/2;
+  align-self: center;
+  justify-self: center;
+  font-size: 3em;
+  text-transform: uppercase;
+}
+
 #title {
   font-size: 1.5em;
   font-weight: bold;
