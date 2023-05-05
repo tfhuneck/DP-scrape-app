@@ -1,55 +1,46 @@
 import { basketballdata } from '../basketballdata';
 
 function DataEditor() {
-
     return (
         <>
             <div className='container-fluid'>
                 <div className='row'>
-                    <div className='col-3 data-headers'>Product Name</div>
-                    <div className='col data-headers'>D&P Price</div>
-                    <div className='col data-headers'>Blowout Price</div>
-                    <div className='col data-headers'>Dave&Adams Price</div>
-                    <div className='col data-headers'>Steel City Price</div>
-                    <div className='col data-headers'>Rbi Cru7 Price</div>
-                    <div className='col data-headers'>Edit</div>
-                </div>
-                <div className='row'>
-                   <div className='data col-3'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.name}</div>)
-                    })}
-                   </div>
-                   <div className='data col'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.dandp}</div>)
-                    })}
-                   </div>
-                   <div className='data col'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.blowout}</div>)
-                    })}
-                   </div>
-                   <div className='data col'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.dave}</div>)
-                    })}
-                   </div>
-                   <div className='data col'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.steel}</div>)
-                    })}
-                   </div>
-                   <div className='data col'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.rbi}</div>)
-                    })}
-                   </div>
-                   <div className='data col'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}><button className="btn btn-sm btn-outline-info dropdown-toggle">Edit</button></div>)
-                    })}
-                   </div>
+                    <table className='table table-light table-striped table-hover'>
+                        <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">D&P</th>
+                                <th scope="col">Blowout</th>
+                                <th scope="col">Dave&Adams</th>
+                                <th scope="col">Steel City</th>
+                                <th scope="col">Rbi Cru7</th>
+                                <th scope="col">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {basketballdata.map((data, key) => {
+                            return (
+                                <>
+                                <tr key={key}>
+                                    <td className='pname'>{data.name}</td>
+                                    <td className='data-list'>{data.urls.dandp}</td>
+                                    <td className='data-list'>{data.urls.blowout}</td>
+                                    <td className='data-list'>{data.urls.dave}</td>
+                                    <td className='data-list'>{data.urls.steel}</td>
+                                    <td className='data-list'>{data.urls.rbi}</td>
+                                    <td className='data-edit'>
+                                        <button className="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">Edit</button>
+                                        <ul class="dropdown-menu">
+                                            <li><a className="dropdown-item">Edit</a></li>
+                                            <li><a className="dropdown-item link-danger">Delete</a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                </>  
+                            )
+                        })}
+                        </tbody>
+                    </table> 
                 </div>
             </div>
         </>
@@ -57,3 +48,4 @@ function DataEditor() {
 }
 
 export default DataEditor;
+
