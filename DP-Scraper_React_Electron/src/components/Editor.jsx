@@ -6,31 +6,32 @@ import { useState, useEffect } from 'react'
 
 
 function Entry() {
-    
-    // function handleSubmit(event) {
-    //     event.preventDefault();
-    // let btnsbmt = document.querySelector('#entrysubmit');
-    // btnsbmt.addEventListener("click", (event, arg) => {
-    // }
-    
-    const dataSend = (event)=> {
-        event.preventDefault();
-        // let newEntry = document.getElementById('pname').value;
-            let newEntry = {
-                name: document.getElementById('pname').value,
-                dandp: document.getElementById('dandp').value,
-                blowout: document.getElementById('blowout').value,
-                dave: document.getElementById('dave').value,
-                steel: document.getElementById('steel').value,
-                rbi: document.getElementById('rbi').value
-            };
-            console.log(newEntry);
-            // let newData = JSON.stringify(newEntry);
-            // console.log(newData);
 
-            window.Bridge.saveData(newEntry);
-            alert('Entry Submitted');
-        
+//=======Function that sends data via Bridge to electron.js to be saved to data.json=========
+    const dataSend = (event)=> {
+        let product = {
+            name: document.getElementById('pname').value,
+            dandp: document.getElementById('dandp').value,
+            blowout: document.getElementById('blowout').value,
+            dave: document.getElementById('dave').value,
+            steel: document.getElementById('steel').value,
+            rbi: document.getElementById('rbi').value
+        };
+        console.log(product);
+
+        if(document.getElementById('type').value == 'Basketball') {
+            window.BasketballBridge.saveBasketballData(product);
+        }
+        if(document.getElementById('type').value == 'Baseball') {
+            window.BaseballBridge.saveBaseballData(product);
+        }
+        if(document.getElementById('type').value == 'Football') {
+            window.FootballBridge.saveFootballData(product);
+        }
+        if(document.getElementById('type').value == 'Other') {
+            window.OtherBridge.saveOtherData(product);
+        }
+        alert('Entry Submitted')
     }
 
     return (
@@ -58,7 +59,7 @@ function Entry() {
                         <input id='steel' type="text" placeholder='Steel City Cards url' className='form-control'/>
                         <input id='rbi' type="text" placeholder='RBI Cru7 Cards url' className='form-control'/>
                         <br/>
-                        <button id='entrysubmit' onClick={dataSend} className='btn btn-outline-danger'>Submit</button>
+                        <button id='entrysubmit' type='submit' onClick={dataSend} className='btn btn-outline-danger'>Submit</button>
                     </form>
                     <br/>
                 </>

@@ -39,7 +39,6 @@ head {
   font-weight: bold;
   overflow: hidden;
 }
-
 nav {
   height: 65vh;
   width: 15vw;
@@ -87,7 +86,7 @@ nav {
   height: 300%;
   left: -500px;
   top: -30px;
-  background: linear-gradient(to right, red,rgb(56, 1, 1));
+  background: linear-gradient(to right, rgb(209, 3, 3),rgb(113, 1, 1));
   position: absolute;
   transition: all .2s ease-Out;
 }
@@ -122,41 +121,55 @@ nav {
 }
 
 .card {
-  background-image: linear-gradient(#d0d0d0, #d7c8c8); 
+  background-image: linear-gradient(#e0e6ea, #bab8b8); 
   filter: drop-shadow(0 0 0.5rem #192223);
 }
-
 .dashboard {
   text-align: left;
   width: 100%;
 }
-
 .editor-input{
   text-align: left;
   
 }
-
 .editor{
   text-align: left;
   width: 100%;
   white-space: nowrap;
   overflow-x: auto;
 }
-
-.data-headers{
-  display: inline-block;
-  float: none;
-  overflow-x: clip;
+table tbody td{
+  border: none;
 }
-
-.data{
-  display: inline-block;
-  float: none;
-  background-color: white;
-  overflow-x: auto;
+table thead th:first-child {
+  border-radius: 10px 0 0 0;
+}
+table thead th:last-child {
+  border-radius: 0 10px 0 0;
+}
+table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 10px;
+}
+table tbody tr:last-child td:last-child {
+  border-radius: 0 0 10px 0;
+}
+td {
+  max-width: 0;
+  overflow: scroll;
+  white-space: nowrap;
+}
+.data-list{
+  width: 10%;
+}
+.data-edit{
+  width: 10%;
+}
+.pname{
+  width: 40%;
+  padding-right: 1em;
 }
 .btn-sm {
-  height: 1.3rem;
+  height: 1.5rem;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   margin-top: 0 !important;

@@ -5,46 +5,42 @@ function DataDisplay() {
     return (
         <>
             <div className='container-fluid'>
-                <div className='row'>
-                    <div className='col data-headers'>Product Name</div>
-                    <div className='col data-headers'>D&P Price</div>
-                    <div className='col data-headers'>Blowout Price</div>
-                    <div className='col data-headers'>Dave&Adams Price</div>
-                    <div className='col data-headers'>Steel City Price</div>
-                    <div className='col data-headers'>Rbi Cru7 Price</div>
-                    <div className='col data-headers'>Edit</div>
+                <div className="btn-group">
+                        <button type="button" className="btn btn-dark">Basektball</button>
+                        <button type="button" className="btn btn-dark">Baseball</button>
+                        <button type="button" className="btn btn-dark">Footbal</button>
+                        <button type="button" className="btn btn-dark">Other</button>
                 </div>
+                <br/><br/>
                 <div className='row'>
-                   <div className='data col form-control'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.name}</div>)
-                    })}
-                   </div>
-                   <div className='data col form-control'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.dandp}</div>)
-                    })}
-                   </div>
-                   <div className='data col form-control'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.blowout}</div>)
-                    })}
-                   </div>
-                   <div className='data col form-control'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.dave}</div>)
-                    })}
-                   </div>
-                   <div className='data col form-control'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.steel}</div>)
-                    })}
-                   </div>
-                   <div className='data col form-control'>
-                    {basketballdata.map((data, key) => {
-                        return (<div key={key}>{data.prices.rbi}</div>)
-                    })}
-                   </div>
+                    <table className='table table-dark table-striped table-hover'>
+                        <thead>
+                            <tr>
+                                <th scope="col" className='data-list pname'>Product Name</th>
+                                <th scope="col" className='data-list'>D&P</th>
+                                <th scope="col" className='data-list'>Blowout</th>
+                                <th scope="col" className='data-list'>Dave&Adams</th>
+                                <th scope="col" className='data-list'>Steel City</th>
+                                <th scope="col" className='data-list'>Rbi Cru7</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {basketballdata.map((data, key) => {
+                            return (
+                                <>
+                                <tr key={key}>
+                                    <td className='pname'>{data.name}</td>
+                                    <td>{data.prices.dandp}</td>
+                                    <td>{data.prices.blowout}</td>
+                                    <td>{data.prices.dave}</td>
+                                    <td>{data.prices.steel}</td>
+                                    <td>{data.prices.rbi}</td>
+                                </tr>
+                                </>  
+                            )
+                        })}
+                        </tbody>
+                    </table> 
                 </div>
             </div>
         </>

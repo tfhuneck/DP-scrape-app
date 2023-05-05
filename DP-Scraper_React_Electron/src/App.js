@@ -13,11 +13,11 @@ const App = () => {
         <Router>
             <div className='container-fluid'>
                 <div className='row'>
-                    <div className='col-sm-2'>
+                    <div className='col-sm-2 fixed-top one'>
                         <img src={dplogo} className='dplogo'></img>
                     <Navbar />
                     </div>
-                    <div className='col'>
+                    <div className='col offset-2 two'>
                         <Routes>
                             <Route path='/' element={<Dashboard />} />
                             <Route path='/entry' element={<Entry />} />
