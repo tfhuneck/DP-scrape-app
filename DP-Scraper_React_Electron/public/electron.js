@@ -38,15 +38,15 @@ function createWindow() {
   });
 }
 
-//=======ipcMain recieving data via Bridge and saving to json files=========
-// =======Save Basketball Data============
-ipcMain.on("saveBasketballData", (event, data) => {
-    const readData = fs.readFileSync("./src/json/basketballdata.json");
+//=======ipcMain recieving data via Bridge and saving to json files========
+const saveData = (destination, data) => {
+  const readData = fs.readFileSync(destination);
     const dataArr = []
     if(readData.length === 0) {
       dataArr.push(data);
+      console.log(dataArr);
       let dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/basketballdata.json", dataStr);
+      fs.writeFileSync(destination, dataStr);
       console.log("Data Saved");
     }else {
       const parsedData = JSON.parse(readData);
@@ -54,69 +54,27 @@ ipcMain.on("saveBasketballData", (event, data) => {
       dataArr.push(data);
       console.log(dataArr);
       const dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/basketballdata.json", dataStr);
+      fs.writeFileSync(destination, dataStr);
       console.log("Data Saved"); 
     } 
+}
+// =======Save Basketball Data============
+ipcMain.on("saveBasketball", (event, data) => {
+   saveData("./src/json/basketballdata.json", data);
 });
 
 // =======Save Baseball Data============
-ipcMain.on("saveBaseballData", (event, data) => {
-    const readData = fs.readFileSync("./src/json/baseballdata.json");
-    const dataArr = []
-    if(readData.length === 0) {
-      dataArr.push(data);
-      let dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/baseballdata.json", dataStr);
-      console.log("Data Saved");
-    }else {
-      const parsedData = JSON.parse(readData);
-      dataArr.push(...parsedData);
-      dataArr.push(data);
-      console.log(dataArr);
-      const dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/baseballdata.json", dataStr);
-      console.log("Data Saved"); 
-    } 
+ipcMain.on("saveBaseball", (event, data) => {
+   saveData("./src/json/baseballdata.json", data); 
 });
 
 // =======Save Football Data============
-ipcMain.on("saveFootballData", (event, data) => {
-    const readData = fs.readFileSync("./src/json/footballdata.json");
-    const dataArr = []
-    if(readData.length === 0) {
-      dataArr.push(data);
-      let dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/footballdata.json", dataStr);
-      console.log("Data Saved");
-    }else {
-      const parsedData = JSON.parse(readData);
-      dataArr.push(...parsedData);
-      dataArr.push(data);
-      console.log(dataArr);
-      const dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/footballdata.json", dataStr);
-      console.log("Data Saved"); 
-    } 
+ipcMain.on("saveFootball", (event, data) => {
+    saveData("./src/json/footballdata.json", data);
 });
 
 // =======Save Other Data============
-ipcMain.on("saveOtherData", (event, data) => {
-    const readData = fs.readFileSync("./src/json/otherdata.json");
-    const dataArr = []
-    if(readData.length === 0) {
-      dataArr.push(data);
-      let dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/otherdata.json", dataStr);
-      console.log("Data Saved");
-    }else {
-      const parsedData = JSON.parse(readData);
-      dataArr.push(...parsedData);
-      dataArr.push(data);
-      console.log(dataArr);
-      const dataStr = JSON.stringify(dataArr);
-      fs.writeFileSync("./src/json/otherdata.json", dataStr);
-      console.log("Data Saved"); 
-    } 
+ipcMain.on("saveOther", (event, data) => {
+   saveData("./src/json/otherdata.json", data);
 });
 
-//=========Read Data from JSON files and send to UI============

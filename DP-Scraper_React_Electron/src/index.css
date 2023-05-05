@@ -19,7 +19,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+#root{
+  margin-top: 2em;
+}
 head {
   grid-column: 1/2;
   grid-row: 1/2;
@@ -92,6 +94,7 @@ nav {
 }
 
 .dplogo {
+  margin-top: 1em;
   float: left;
   height: 20vmin;
   width:  20vmin;

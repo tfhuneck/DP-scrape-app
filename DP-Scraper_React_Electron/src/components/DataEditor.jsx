@@ -1,6 +1,10 @@
 import { basketballdata } from '../basketballdata';
+import { useState, useEffect } from 'react';
+
 
 function DataEditor() {
+    
+
     return (
         <>
             <div className='container-fluid'>
@@ -23,16 +27,16 @@ function DataEditor() {
                                 <>
                                 <tr key={key}>
                                     <td className='pname'>{data.name}</td>
-                                    <td className='data-list'>{data.urls.dandp}</td>
-                                    <td className='data-list'>{data.urls.blowout}</td>
-                                    <td className='data-list'>{data.urls.dave}</td>
-                                    <td className='data-list'>{data.urls.steel}</td>
-                                    <td className='data-list'>{data.urls.rbi}</td>
+                                    <td className='data-list'>{data.dandp}</td>
+                                    <td className='data-list'>{data.blowout}</td>
+                                    <td className='data-list'>{data.dave}</td>
+                                    <td className='data-list'>{data.steel}</td>
+                                    <td className='data-list'>{data.rbi}</td>
                                     <td className='data-edit'>
                                         <button className="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">Edit</button>
-                                        <ul class="dropdown-menu">
-                                            <li><a className="dropdown-item">Edit</a></li>
-                                            <li><a className="dropdown-item link-danger">Delete</a></li>
+                                        <ul className="dropdown-menu">
+                                            <li><a key="edit" className="dropdown-item">Edit</a></li>
+                                            <li><a key="delete" className="dropdown-item link-danger">Delete</a></li>
                                         </ul>
                                     </td>
                                 </tr>

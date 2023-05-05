@@ -1,14 +1,14 @@
 import '../index.css';
 import Card from './Component';
-import { basketballdata } from '../basketballdata';
 import DataEditor from './DataEditor';
 import { useState, useEffect } from 'react'
 
 
-function Entry() {
 
+function Entry() {
 //=======Function that sends data via Bridge to electron.js to be saved to data.json=========
     const dataSend = (event)=> {
+        // event.preventDefault();
         let product = {
             name: document.getElementById('pname').value,
             dandp: document.getElementById('dandp').value,
@@ -20,16 +20,16 @@ function Entry() {
         console.log(product);
 
         if(document.getElementById('type').value == 'Basketball') {
-            window.BasketballBridge.saveBasketballData(product);
+            window.saveBasketballApi.saveData(product);
         }
         if(document.getElementById('type').value == 'Baseball') {
-            window.BaseballBridge.saveBaseballData(product);
+            window.saveBaseballApi.saveData(product);
         }
         if(document.getElementById('type').value == 'Football') {
-            window.FootballBridge.saveFootballData(product);
+            window.saveFootballApi.saveData(product);
         }
         if(document.getElementById('type').value == 'Other') {
-            window.OtherBridge.saveOtherData(product);
+            window.saveOtherApi.saveData(product);
         }
         alert('Entry Submitted')
     }

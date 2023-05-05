@@ -1,5 +1,3 @@
-
-const fs = require('fs');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const chromedriver = require('chromedriver');
