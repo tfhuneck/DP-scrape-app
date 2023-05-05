@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import Terminal from 'terminal-in-react';
 
 const Console = () => {
