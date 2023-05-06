@@ -42,6 +42,7 @@ head {
   overflow: hidden;
 }
 nav {
+  margin-left: 0.5em;
   height: 65vh;
   width: 15vw;
   filter: drop-shadow(0 0 0.5rem #192223);

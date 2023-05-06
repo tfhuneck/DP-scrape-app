@@ -62,19 +62,37 @@ const saveData = (destination, data) => {
 ipcMain.on("saveBasketball", (event, data) => {
    saveData("./src/json/basketballdata.json", data);
 });
-
 // =======Save Baseball Data============
 ipcMain.on("saveBaseball", (event, data) => {
    saveData("./src/json/baseballdata.json", data); 
 });
-
 // =======Save Football Data============
 ipcMain.on("saveFootball", (event, data) => {
     saveData("./src/json/footballdata.json", data);
 });
-
 // =======Save Other Data============
 ipcMain.on("saveOther", (event, data) => {
    saveData("./src/json/otherdata.json", data);
 });
 
+//=========Read Data from JSON files and send to UI============
+//=========Get Basketball data==========
+ipcMain.handle('getBasketball', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/basketballdata.json"));
+  return response;
+})
+//=========Get Baseball data==========
+ipcMain.handle('getBaseball', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/baseballdata.json"));
+  return response;
+})
+//=========Get Football data==========
+ipcMain.handle('getFootball', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/footballdata.json"));
+  return response;
+})
+//=========Get Other data==========
+ipcMain.handle('getOther', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/otherdata.json"));
+  return response;
+})

@@ -13,9 +13,9 @@ function Dashboard() {
             body={(
                 <>
                     <div className="btn-group">
-                        <button type="button" className="btn btn-outline-dark">Scrape Basektball</button>
+                        <button type="button" className="btn btn-outline-dark">Scrape Basketball</button>
                         <button type="button" className="btn btn-outline-dark">Scrape Baseball</button>
-                        <button type="button" className="btn btn-outline-dark">Scrape Footbal</button>
+                        <button type="button" className="btn btn-outline-dark">Scrape Football</button>
                         <button type="button" className="btn btn-outline-dark">Scrape Other</button>
                     </div><br/><br/>
                     <button className='btn btn-outline-danger'>Run All Scrapes</button>
