@@ -1,4 +1,10 @@
+
+# Start App in dev as following:
+
+    'npm run electron-dev'
+
 in package.json change "cross-env npm start" to "cross-env BROWSER=none npm start" to start without opening browser
+
 
 # Getting Started with Create React App
 
