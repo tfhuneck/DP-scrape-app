@@ -45,8 +45,59 @@ contextBridge.exposeInMainWorld('getOtherApi', {
     return result;
   })
 })
+// ========Bridge for getting Scraped Basketball Price Data=========
+contextBridge.exposeInMainWorld('getBasketballPriceApi', {
+  getData: (channel, data) => ipcRenderer.invoke('getBasketballPrice', data).then((result) => {
+    return result;
+  })
+})
+// ========Bridge for getting Scraped Baseball Price Data=========
+contextBridge.exposeInMainWorld('getBaseballPriceApi', {
+  getData: (channel, data) => ipcRenderer.invoke('getBaseballPrice', data).then((result) => {
+    return result;
+  })
+})
+// ========Bridge for getting Scraped Football Price Data=========
+contextBridge.exposeInMainWorld('getFootballPriceApi', {
+  getData: (channel, data) => ipcRenderer.invoke('getFootballPrice', data).then((result) => {
+    return result;
+  })
+})
+// ========Bridge for getting Scraped Other Price Data=========
+contextBridge.exposeInMainWorld('getOtherPriceApi', {
+  getData: (channel, data) => ipcRenderer.invoke('getOtherPrice', data).then((result) => {
+    return result;
+  })
+})
 
 // ========Bridge for calling scrapes=======
-contextBridge.exposeInMainWorld('scrapebasketball', {
-  scrape: () => ipcRenderer.send('scrapebasketball')
+//===========Scraping Basketball===========
+contextBridge.exposeInMainWorld('scrapeBasketballApi', {
+  scrapeBasketball: () => ipcRenderer.invoke('scrapebasketball').then((result) => {
+    return result;
+  })
+})
+//===========Scraping Basketball===========
+contextBridge.exposeInMainWorld('scrapeBaseballApi', {
+  scrapeBaseball: () => ipcRenderer.invoke('scrapebaseball').then((result) => {
+    return result;
+  })
+})
+//===========Scraping Basketball===========
+contextBridge.exposeInMainWorld('scrapeFootballApi', {
+  scrapeFootball: () => ipcRenderer.invoke('scrapefootball').then((result) => {
+    return result;
+  })
+})
+//===========Scraping Basketball===========
+contextBridge.exposeInMainWorld('scrapeOtherApi', {
+  scrapeOther: () => ipcRenderer.invoke('scrapeother').then((result) => {
+    return result;
+  })
+})
+//===========Scraping Basketball===========
+contextBridge.exposeInMainWorld('scrapeAllApi', {
+  scrapeAll: () => ipcRenderer.invoke('scrapeall').then((result) => {
+    return result;
+  })
 })

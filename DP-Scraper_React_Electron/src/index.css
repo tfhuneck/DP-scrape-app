@@ -106,13 +106,15 @@ nav {
 
 .Loading-logo {
   float: right;
+  margin-top: 2em;
+  margin-right: 25vw;
   height: 20vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .Loading-logo {
-    animation: Loading-logo-spin infinite 10s linear;
+    animation: Loading-logo-spin infinite 5s linear;
   }
 }
 
@@ -171,7 +173,7 @@ td {
 }
 .pname{
   width: 40%;
-  padding-right: 1em;
+  padding-right: 5rem;
 }
 .btn-sm {
   height: 1.5rem;
