@@ -45,7 +45,6 @@ const table = (dataset, title) => {
 }
 
 function DataEditor() {
-
     const [basketballdata, setBasketballdata] = useState([]);
     const [baseballdata, setBaseballdata] = useState([]);
     const [footballdata, setFootballdata] = useState([]);
@@ -103,28 +102,28 @@ function DataEditor() {
     },[])
     
     const BasketballTable = () => {
-        if (displayTable == 'Basketball'){
+        if (displayTable === 'Basketball'){
             return table(basketballdata, 'Basketball');
         } else {
             return
         };
     } 
     const BaseballTable = () => {
-        if (displayTable == 'Baseball') {
+        if (displayTable === 'Baseball') {
           return table(baseballdata, 'Baseball');
         } else {
             return
         };
     } 
     const FootballTable = () => {
-        if (displayTable == 'Football') {
+        if (displayTable === 'Football') {
            return table(footballdata, 'Football');
         } else {
             return
         };
     } 
     const OtherTable = () => {
-        if (displayTable == 'Other') {
+        if (displayTable === 'Other') {
             return table(otherdata, 'Other');
         } else {
             return

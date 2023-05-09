@@ -101,11 +101,56 @@ ipcMain.handle('getOther', (event, arg) => {
   const response = JSON.parse(fs.readFileSync("./src/json/otherdata.json"));
   return response;
 })
-
-//==========Scraping Basketball Prices=============
-ipcMain.on('scrapebasketball', (event, arg) => {
-    scrape("./src/json/basketballdata.json", "./src/json/basketballscraped.json")
+//=========Get Scraped Basketball Price data==========
+ipcMain.handle('getBasketballPrice', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/basketballscraped.json"));
+  return response;
 })
+//=========Get Scraped Baseball Price data==========
+ipcMain.handle('getBaseballPrice', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/baseballscraped.json"));
+  return response;
+})
+//=========Get Scraped Football Price data==========
+ipcMain.handle('getFootballPrice', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/footballscraped.json"));
+  return response;
+})
+//=========Get Scraped Other Price data==========
+ipcMain.handle('getOtherPrice', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/otherscraped.json"));
+  return response;
+})
+
+//============Scraping Functions=============
+//==========Scraping Basketball Prices=============
+ipcMain.handle('scrapebasketball', async (event, arg) => {
+  await scrape("./src/json/basketballdata.json", "./src/json/basketballscraped.json")
+  return 'The Scrape is Complete. Basketball Price Data was updated.' 
+});
+//==========Scraping Baseball Prices=============
+ipcMain.handle('scrapebaseball', async (event, arg) => {
+  await scrape("./src/json/baseballdata.json", "./src/json/baseballscraped.json")
+  return 'The Scrape is Complete. Baseball Price Data was updated.' 
+});
+//==========Scraping Football Prices=============
+ipcMain.handle('scrapefootball', async (event, arg) => {
+  await scrape("./src/json/footballdata.json", "./src/json/footballscraped.json")
+  return 'The Scrape is Complete. Football Price Data was updated.' 
+});
+//==========Scraping Other Prices=============
+ipcMain.handle('scrapeother', async (event, arg) => {
+  await scrape("./src/json/otherdata.json", "./src/json/otherscraped.json")
+  return 'The Scrape is Complete. Other Price Data was updated.' 
+});
+//==========Scraping All Prices=============
+ipcMain.handle('scrapeall', async (event, arg) => {
+  await scrape("./src/json/basketballdata.json", "./src/json/basketballscraped.json")
+  await scrape("./src/json/baseballdata.json", "./src/json/baseballscraped.json")
+  await scrape("./src/json/footballdata.json", "./src/json/footballscraped.json")
+  await scrape("./src/json/otherdata.json", "./src/json/otherscraped.json")
+  return 'All Scrapes are Complete. All Price Data was updated.' 
+});
 
 
 //=========Main Scrape function===========
@@ -163,6 +208,7 @@ const getDPPrice = async (url) => {
   .catch(function (error) {
       // handle error
       console.log(error);
+      dandpPrices.push('-'); 
   })
   .finally(function () {
       // always executed
@@ -185,6 +231,7 @@ const getBlowoutPrice = async (url) => {
   .catch(function (error) {
       // handle error
       console.log(error);
+      blowoutPrices.push('-');
   })
   .finally(async() => {
       await driver.quit()
@@ -204,6 +251,7 @@ const getDavePrice = async (url) => {
   .catch(function (error) {
       // handle error
       console.log(error);
+      davePrices.push('-');
   })
   .finally(function () {
       // always executed
@@ -220,16 +268,19 @@ const getSteelPrice = async (url) => {
     // priceArray.push($price);
     if (price.length >=2 ) {
         price.splice(1,1);
-        console.log(price)
-        steelPrices.push(price);
+        let priceFinal = '$' + price
+        console.log(priceFinal)
+        steelPrices.push(priceFinal);
     }else{
-      console.log(price)
-      steelPrices.push(price);
+      let priceFinal = '$' + price
+      console.log(priceFinal)
+      steelPrices.push(priceFinal);
     }
   })
   .catch(function (error) {
       // handle error
       console.log(error);
+      steelPrices.push('-')
   })
   .finally(function () {
       // always executed
@@ -249,6 +300,7 @@ const getRbiPrice = async (url) => {
   .catch(function (error) {
       // handle error
       console.log(error);
+      rbiPrices.push('-');
   })
   .finally(function () {
       // always executed
@@ -259,9 +311,9 @@ async function executeScrape() {
     for (let i = 0; i < dandpUrls.length; i++) { 
       await getDPPrice(dandpUrls[i])
     };
-    // for (let i = 0; i < blowoutUrls.length; i++) { 
-    //   await getBlowoutPrice(blowoutUrls[i])  
-    // };
+    for (let i = 0; i < blowoutUrls.length; i++) { 
+      await getBlowoutPrice(blowoutUrls[i])  
+    };
     for (let i = 0; i < daveUrls.length; i++) {
       await getDavePrice(daveUrls[i])
     };
@@ -289,5 +341,7 @@ async function executeScrape() {
       console.log('Data Saved');
      }
   }
-  executeScrape();
+await executeScrape()
+ .then(res => console.log('scrape complete'))
+ .catch((error) => console.log(error))
 }
