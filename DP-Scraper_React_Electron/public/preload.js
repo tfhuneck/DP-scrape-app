@@ -46,4 +46,7 @@ contextBridge.exposeInMainWorld('getOtherApi', {
   })
 })
 
-
+// ========Bridge for calling scrapes=======
+contextBridge.exposeInMainWorld('scrapebasketball', {
+  scrape: () => ipcRenderer.send('scrapebasketball')
+})

@@ -5,6 +5,12 @@ import Console from './Console'
 import DataDisplay from './DataDisplay';
 
 function Dashboard() {
+
+    function scrapeBasketball(){
+        window.scrapebasketball.scrape()
+        return
+    }
+
     return (
         <>
         <Card
@@ -13,7 +19,7 @@ function Dashboard() {
             body={(
                 <>
                     <div className="btn-group">
-                        <button type="button" className="btn btn-outline-dark">Scrape Basketball</button>
+                        <button onClick={scrapeBasketball} type="button" className="btn btn-outline-dark">Scrape Basketball</button>
                         <button type="button" className="btn btn-outline-dark">Scrape Baseball</button>
                         <button type="button" className="btn btn-outline-dark">Scrape Football</button>
                         <button type="button" className="btn btn-outline-dark">Scrape Other</button>
