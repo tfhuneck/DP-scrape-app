@@ -30,8 +30,8 @@ const table = (dataset, title) => {
                         <td className='data-edit'>
                             <button className="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">Edit</button>
                             <ul className="dropdown-menu">
-                                <li><a key="edit" className="dropdown-item">Edit</a></li>
-                                <li><a key="delete" className="dropdown-item link-danger">Delete</a></li>
+                                <li><a key="edit" className="dropdown-item btn">Edit</a></li>
+                                <li><a key="delete" className="dropdown-item link-danger btn">Delete</a></li>
                             </ul>
                         </td>
                     </tr>
