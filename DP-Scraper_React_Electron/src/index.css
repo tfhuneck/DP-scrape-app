@@ -105,13 +105,14 @@ nav {
 }
 
 .Loading-logo {
+  float: right;
   height: 20vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .Loading-logo {
-    animation: Loading-logo-spin infinite 20s linear;
+    animation: Loading-logo-spin infinite 10s linear;
   }
 }
 
@@ -178,4 +179,8 @@ td {
   padding-bottom: 0 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+}
+.scrp{
+  width: 250px;
+  margin-top: 0.2em;
 }

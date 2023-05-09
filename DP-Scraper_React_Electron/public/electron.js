@@ -104,7 +104,13 @@ ipcMain.handle('getOther', (event, arg) => {
 
 //==========Scraping Basketball Prices=============
 ipcMain.on('scrapebasketball', (event, arg) => {
-  const data = JSON.parse(fs.readFileSync("./src/json/basketballdata.json"));
+    scrape("./src/json/basketballdata.json", "./src/json/basketballscraped.json")
+})
+
+
+//=========Main Scrape function===========
+async function scrape(input, output) {
+  const data = JSON.parse(fs.readFileSync(input));
   const names =[];
   const products = [];
   const dandpUrls = [];
@@ -249,7 +255,7 @@ const getRbiPrice = async (url) => {
     });    
 }
 //============executing Scrapes============
-async function scrape() {
+async function executeScrape() {
     for (let i = 0; i < dandpUrls.length; i++) { 
       await getDPPrice(dandpUrls[i])
     };
@@ -279,9 +285,9 @@ async function scrape() {
       console.log(prices);
       products.push(prices)
       let pricesStr = JSON.stringify(products);
-      fs.writeFileSync("./src/json/basketballscraped.json", pricesStr);
+      fs.writeFileSync(output, pricesStr);
       console.log('Data Saved');
      }
   }
-  scrape();
-})
+  executeScrape();
+}
