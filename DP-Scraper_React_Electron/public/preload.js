@@ -2,6 +2,11 @@ const { contextBridge, ipcRenderer } = require("electron");
 const fs = require('fs');
 const path = require('path');
 
+// =======Console Logs========
+contextBridge.exposeInMainWorld('consoleLogApi', {
+  sendConsole: (message) => ipcRenderer.on('asynchronous-message', message)
+})
+
 //=====Bridges/Data APIs between Frontend/Render proccess and Backend/Main Process=======
 // =======Bridge for saving Basketball Data=======
 contextBridge.exposeInMainWorld('saveBasketballApi', {

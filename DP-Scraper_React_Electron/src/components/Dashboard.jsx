@@ -2,12 +2,27 @@ import '../index.css';
 import Card from './Component'
 import DataDisplay from './DataDisplay';
 import Loading from './Loading';
-import { useState } from 'react';
+import { useState} from 'react';
+
+function Consolelogger() {
+    window.consoleLogApi.sendConsole((event, message) => {
+        console.log(message);
+        document.getElementById('terminal').insertAdjacentHTML('beforeend', message + "<br>")
+    })
+        
+    return (
+        <>
+        <div className='console-log'>
+            <span id='terminal'></span>
+            <h6>Console ...</h6>
+        </div>
+        </>
+    )
+}
 
 function Dashboard() {
-
     const [displayloading, setDisplayLoading] = useState(false);
-
+    
     async function basketball(){
         setDisplayLoading(true)
         await window.scrapeBasketballApi.scrapeBasketball()
@@ -72,17 +87,24 @@ function Dashboard() {
         <Card
             class="dashboard"
             header="DASHBOARD"
-            text={(<ShowLoading/>)}
             body={(
-                <>
-                    {/* <div className="btn-group"> */}
-                        <button onClick={all} type='button' className='btn btn-outline-danger scrp'>Run All Scrapes</button><br/>
-                        <button onClick={basketball} type="button" className="btn btn-outline-dark scrp">Scrape Basketball Prices</button><br/>
-                        <button onClick={baseball} type="button" className="btn btn-outline-dark scrp">Scrape Baseball Prices</button><br/>
-                        <button onClick={football} type="button" className="btn btn-outline-dark scrp">Scrape Football Prices</button><br/>
-                        <button onClick={other} type="button" className="btn btn-outline-dark scrp">Scrape Other Prices</button>  
-                    {/* </div> */}
-                </>
+                <div className='container-fluid'>
+                    <div className='row'>
+                        <div className='col'>
+                            <button onClick={all} type='button' className='btn btn-outline-danger scrp'>Run All Scrapes</button><br/>
+                            <button onClick={basketball} type="button" className="btn btn-outline-dark scrp">Scrape Basketball Prices</button><br/>
+                            <button onClick={baseball} type="button" className="btn btn-outline-dark scrp">Scrape Baseball Prices</button><br/>
+                            <button onClick={football} type="button" className="btn btn-outline-dark scrp">Scrape Football Prices</button><br/>
+                            <button onClick={other} type="button" className="btn btn-outline-dark scrp">Scrape Other Prices</button>  
+                        </div>
+                        <div className='col'>
+                            <Consolelogger/>
+                        </div> 
+                        <div className='col'>
+                            <ShowLoading/>
+                        </div>
+                    </div>
+                </div>
             )}
         />
         <br/>

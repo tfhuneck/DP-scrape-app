@@ -58,7 +58,7 @@ function DataDisplay() {
         .catch((error) => {
             console.error(error);
           });
-    },[basketballdata])
+    },[])
 
     useEffect(() => {
         window.getBaseballPriceApi.getData()
@@ -69,7 +69,7 @@ function DataDisplay() {
         .catch((error) => {
             console.error(error);
           });
-    },[baseballdata])
+    },[])
 
     useEffect(() => {
         window.getFootballPriceApi.getData()
@@ -80,7 +80,7 @@ function DataDisplay() {
         .catch((error) => {
             console.error(error);
           });
-    },[footballdata])
+    },[])
 
     useEffect(() => {
         window.getOtherPriceApi.getData()
@@ -91,7 +91,7 @@ function DataDisplay() {
         .catch((error) => {
             console.error(error);
           });
-    },[otherdata])
+    },[])
 
     const BasketballTable = () => {
         if (displayTable === 'Basketball'){
