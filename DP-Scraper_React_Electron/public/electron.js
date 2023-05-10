@@ -49,18 +49,18 @@ const saveData = (destination, data) => {
   const dataArr = []
   if(readData.length === 0) {
     dataArr.push(data);
-    console.log(dataArr);
+    mainWindow.webContents.send('asynchronous-message', dataArr);
     let dataStr = JSON.stringify(dataArr);
     fs.writeFileSync(destination, dataStr);
-    console.log("Data Saved");
+    mainWindow.webContents.send('asynchronous-message', "Data Saved");
   }else {
     const parsedData = JSON.parse(readData);
     dataArr.push(...parsedData);
     dataArr.push(data);
-    console.log(dataArr);
+    mainWindow.webContents.send('asynchronous-message', dataArr);
     const dataStr = JSON.stringify(dataArr);
     fs.writeFileSync(destination, dataStr);
-    console.log("Data Saved"); 
+    mainWindow.webContents.send('asynchronous-message', "Data Saved"); 
   } 
 }
 // =======Save Basketball Data============
@@ -202,12 +202,12 @@ const getDPPrice = async (url) => {
     const $ = cheerio.load(htmlData);
     const $price = $('#ProductPrice-product-template', htmlData).text();
     const price = $price.replaceAll(/\s/g,'');
-    console.log(price);
+    mainWindow.webContents.send('asynchronous-message', price);
     dandpPrices.push(price);    
   })
   .catch(function (error) {
       // handle error
-      console.log(error);
+      mainWindow.webContents.send('asynchronous-message', error);
       dandpPrices.push('-'); 
   })
   .finally(function () {
@@ -225,12 +225,12 @@ const getBlowoutPrice = async (url) => {
     let $price = await driver.findElement(By.className('price-box'));
     let price = await $price.findElement(By.className('price')).getText();
         // const price = $price.split();
-    console.log(price);
+    mainWindow.webContents.send('asynchronous-message', price);
     blowoutPrices.push(price); 
     }) 
   .catch(function (error) {
       // handle error
-      console.log(error);
+      mainWindow.webContents.send('asynchronous-message', error);
       blowoutPrices.push('-');
   })
   .finally(async() => {
@@ -245,12 +245,12 @@ const getDavePrice = async (url) => {
     const $ = cheerio.load(htmlData);
     const $price = $('table.item-pricing', htmlData).find('strong.price').text();
     const price = $price.replaceAll(/\s/g,'');
-    console.log(price);
+    mainWindow.webContents.send('asynchronous-message', price);
     davePrices.push(price);
   })
   .catch(function (error) {
       // handle error
-      console.log(error);
+      mainWindow.webContents.send('asynchronous-message', error);
       davePrices.push('-');
   })
   .finally(function () {
@@ -269,17 +269,17 @@ const getSteelPrice = async (url) => {
     if (price.length >=2 ) {
         price.splice(1,1);
         let priceFinal = '$' + price
-        console.log(priceFinal)
+        mainWindow.webContents.send('asynchronous-message', priceFinal)
         steelPrices.push(priceFinal);
     }else{
       let priceFinal = '$' + price
-      console.log(priceFinal)
+      mainWindow.webContents.send('asynchronous-message', priceFinal)
       steelPrices.push(priceFinal);
     }
   })
   .catch(function (error) {
       // handle error
-      console.log(error);
+      mainWindow.webContents.send('asynchronous-message', error);
       steelPrices.push('-')
   })
   .finally(function () {
@@ -294,12 +294,12 @@ const getRbiPrice = async (url) => {
     const $ = cheerio.load(htmlData);
     const $price = $('#ProductPrice-product-template', htmlData).text();
     const price = $price.replaceAll(/\s/g,'');
-    console.log(price);
+    mainWindow.webContents.send('asynchronous-message', price);
     rbiPrices.push(price);
   })
   .catch(function (error) {
       // handle error
-      console.log(error);
+      mainWindow.webContents.send('asynchronous-message', error);
       rbiPrices.push('-');
   })
   .finally(function () {
@@ -324,7 +324,7 @@ async function executeScrape() {
       await getRbiPrice(rbiUrls[i])
     };
   //===========Using For Loop to save Data to Scraped Json FIle==============
-    console.log(names, dandpPrices, blowoutPrices, davePrices, steelPrices, rbiPrices);
+    mainWindow.webContents.send('asynchronous-message', names, dandpPrices, blowoutPrices, davePrices, steelPrices, rbiPrices);
     for(let i = 0; i < names.length; i++) {
       let prices ={
        name: names[i],
@@ -334,14 +334,14 @@ async function executeScrape() {
        steel: steelPrices[i],
        rbi: rbiPrices[i],
       }
-      console.log(prices);
+      mainWindow.webContents.send('asynchronous-message', prices);
       products.push(prices)
       let pricesStr = JSON.stringify(products);
       fs.writeFileSync(output, pricesStr);
-      console.log('Data Saved');
+      mainWindow.webContents.send('asynchronous-message', 'Data Saved');
      }
   }
 await executeScrape()
- .then(res => console.log('scrape complete'))
- .catch((error) => console.log(error))
+ .then(res => mainWindow.webContents.send('asynchronous-message', 'scrape complete'))
+ .catch((error) => mainWindow.webContents.send('asynchronous-message', error))
 }
