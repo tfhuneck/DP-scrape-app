@@ -10,11 +10,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 /* .container {
   background-image: linear-gradient(#696969, #BDBDBD); 
 } */
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -26,7 +24,6 @@ head {
   grid-column: 1/2;
   grid-row: 1/2;
 }
-
 .page{
   grid-column: 2/3;
   grid-row: 1/2;
@@ -35,7 +32,6 @@ head {
   font-size: 3em;
   text-transform: uppercase;
 }
-
 #title {
   font-size: 1.5em;
   font-weight: bold;
@@ -50,7 +46,6 @@ nav {
 .active{
   color:#f2f2f2;
 }
-
 .navbtn {
   margin-top: 0.1em;
   width: 15vw;
@@ -67,33 +62,28 @@ nav {
   cursor: pointer;
   background-color: #3b3e43;
 }
-
 .navbtn:hover .translate {
   left: 0;
 }
-
 .navbtntext {
   color: #90949d;
   position: relative;
   transition: all .2s ease-Out;
   text-decoration: none;
 }
-
 .navbtntext :hover {
   color: white !important;
 }
-
 .translate {
   /* transform: rotate(35deg); */
   width: 100%;
   height: 300%;
   left: -500px;
   top: -30px;
-  background: linear-gradient(to right, rgb(209, 3, 3),rgb(113, 1, 1));
+  background: linear-gradient(to right, rgb(209, 3, 3),rgb(71, 3, 3));
   position: absolute;
   transition: all .2s ease-Out;
 }
-
 .dplogo {
   margin-top: 1em;
   float: left;
@@ -103,7 +93,6 @@ nav {
   margin-bottom: 5vh;
   margin-left: 2vw;
 }
-
 .Loading-logo {
   float: right;
   /* margin-top: 2em; */
@@ -111,13 +100,11 @@ nav {
   height: 20vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .Loading-logo {
     animation: Loading-logo-spin infinite 5s linear;
   }
 }
-
 @keyframes Loading-logo-spin {
   from {
     transform: rotate(0deg);
@@ -126,7 +113,6 @@ nav {
     transform: rotate(360deg);
   }
 }
-
 .card {
   background-image: linear-gradient(#e0e6ea, #bab8b8); 
   filter: drop-shadow(0 0 0.5rem #192223);
@@ -173,7 +159,6 @@ td {
 }
 .pname{
   width: 40%;
-  padding-right: 5rem;
 }
 .btn-sm {
   height: 1.5rem;
@@ -196,4 +181,12 @@ td {
   overflow: auto;
   display: flex;
   flex-direction: column-reverse;
+}
+.refresh{
+  display: flex;
+  float: right;
+}
+.search{
+  display: flex;
+  float: right;
 }

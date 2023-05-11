@@ -49,18 +49,18 @@ const saveData = (destination, data) => {
   const dataArr = []
   if(readData.length === 0) {
     dataArr.push(data);
-    mainWindow.webContents.send('asynchronous-message', dataArr);
+    console.log(dataArr);
     let dataStr = JSON.stringify(dataArr);
     fs.writeFileSync(destination, dataStr);
-    mainWindow.webContents.send('asynchronous-message', "Data Saved");
+    console.log("Data Saved");
   }else {
     const parsedData = JSON.parse(readData);
     dataArr.push(...parsedData);
     dataArr.push(data);
-    mainWindow.webContents.send('asynchronous-message', dataArr);
+    console.log(dataArr);
     const dataStr = JSON.stringify(dataArr);
     fs.writeFileSync(destination, dataStr);
-    mainWindow.webContents.send('asynchronous-message', "Data Saved"); 
+    console.log("Data Saved"); 
   } 
 }
 // =======Save Basketball Data============
@@ -80,7 +80,7 @@ ipcMain.on("saveOther", (event, data) => {
    saveData("./src/json/otherdata.json", data);
 });
 
-//=========Read Data from JSON files and send to UI============
+// =========Read Data from JSON files and send to UI============
 //=========Get Basketball data==========
 ipcMain.handle('getBasketball', (event, arg) => {
   const response = JSON.parse(fs.readFileSync("./src/json/basketballdata.json"));
@@ -202,12 +202,12 @@ const getDPPrice = async (url) => {
     const $ = cheerio.load(htmlData);
     const $price = $('#ProductPrice-product-template', htmlData).text();
     const price = $price.replaceAll(/\s/g,'');
-    mainWindow.webContents.send('asynchronous-message', price);
+    mainWindow.webContents.send('asynchronous-message', 'D&P Cards price: ' + price);
     dandpPrices.push(price);    
   })
   .catch(function (error) {
       // handle error
-      mainWindow.webContents.send('asynchronous-message', error);
+      mainWindow.webContents.send('asynchronous-message', 'D&P Scrape Error: ' + error);
       dandpPrices.push('-'); 
   })
   .finally(function () {
@@ -225,12 +225,12 @@ const getBlowoutPrice = async (url) => {
     let $price = await driver.findElement(By.className('price-box'));
     let price = await $price.findElement(By.className('price')).getText();
         // const price = $price.split();
-    mainWindow.webContents.send('asynchronous-message', price);
+    mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Price: ' + price);
     blowoutPrices.push(price); 
     }) 
   .catch(function (error) {
       // handle error
-      mainWindow.webContents.send('asynchronous-message', error);
+      mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Error: ' + error);
       blowoutPrices.push('-');
   })
   .finally(async() => {
@@ -245,12 +245,12 @@ const getDavePrice = async (url) => {
     const $ = cheerio.load(htmlData);
     const $price = $('table.item-pricing', htmlData).find('strong.price').text();
     const price = $price.replaceAll(/\s/g,'');
-    mainWindow.webContents.send('asynchronous-message', price);
+    mainWindow.webContents.send('asynchronous-message', 'Dave & Adams Price: ' + price);
     davePrices.push(price);
   })
   .catch(function (error) {
       // handle error
-      mainWindow.webContents.send('asynchronous-message', error);
+      mainWindow.webContents.send('asynchronous-message', 'Dave & Adams Error: ' + error);
       davePrices.push('-');
   })
   .finally(function () {
@@ -269,17 +269,17 @@ const getSteelPrice = async (url) => {
     if (price.length >=2 ) {
         price.splice(1,1);
         let priceFinal = '$' + price
-        mainWindow.webContents.send('asynchronous-message', priceFinal)
+        mainWindow.webContents.send('asynchronous-message', 'Steel City Collectibles Price: ' + priceFinal)
         steelPrices.push(priceFinal);
     }else{
       let priceFinal = '$' + price
-      mainWindow.webContents.send('asynchronous-message', priceFinal)
+      mainWindow.webContents.send('asynchronous-message', 'Steel City Collectibles Price: ' + priceFinal)
       steelPrices.push(priceFinal);
     }
   })
   .catch(function (error) {
       // handle error
-      mainWindow.webContents.send('asynchronous-message', error);
+      mainWindow.webContents.send('asynchronous-message', 'Steel City Collectibles Error: ' + error);
       steelPrices.push('-')
   })
   .finally(function () {
@@ -294,12 +294,12 @@ const getRbiPrice = async (url) => {
     const $ = cheerio.load(htmlData);
     const $price = $('#ProductPrice-product-template', htmlData).text();
     const price = $price.replaceAll(/\s/g,'');
-    mainWindow.webContents.send('asynchronous-message', price);
+    mainWindow.webContents.send('asynchronous-message', 'RBI Cru7 Price: ' + price);
     rbiPrices.push(price);
   })
   .catch(function (error) {
       // handle error
-      mainWindow.webContents.send('asynchronous-message', error);
+      mainWindow.webContents.send('asynchronous-message', 'RBI Cru7 Error: ' + error);
       rbiPrices.push('-');
   })
   .finally(function () {
@@ -324,7 +324,7 @@ async function executeScrape() {
       await getRbiPrice(rbiUrls[i])
     };
   //===========Using For Loop to save Data to Scraped Json FIle==============
-    mainWindow.webContents.send('asynchronous-message', names, dandpPrices, blowoutPrices, davePrices, steelPrices, rbiPrices);
+    mainWindow.webContents.send('asynchronous-message', names + dandpPrices + blowoutPrices + davePrices + steelPrices + rbiPrices);
     for(let i = 0; i < names.length; i++) {
       let prices ={
        name: names[i],
@@ -334,7 +334,7 @@ async function executeScrape() {
        steel: steelPrices[i],
        rbi: rbiPrices[i],
       }
-      mainWindow.webContents.send('asynchronous-message', prices);
+      // mainWindow.webContents.send('asynchronous-message', prices);
       products.push(prices)
       let pricesStr = JSON.stringify(products);
       fs.writeFileSync(output, pricesStr);

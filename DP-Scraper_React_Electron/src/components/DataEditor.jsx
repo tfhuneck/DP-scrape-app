@@ -1,48 +1,6 @@
 import { useState, useEffect } from 'react';
-
-const table = (dataset, title) => {
-    return (
-        <>
-        <h1>{title}</h1>
-        <table className='table table-light table-striped table-hover'>
-            <thead>
-                <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">D&P</th>
-                    <th scope="col">Blowout</th>
-                    <th scope="col">Dave&Adams</th>
-                    <th scope="col">Steel City</th>
-                    <th scope="col">Rbi Cru7</th>
-                    <th scope="col">Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-            {dataset.map((data, key) => {
-                return (
-                    <>
-                    <tr key={key}>
-                        <td className='pname'>{data.name}</td>
-                        <td className='data-list'>{data.dandp}</td>
-                        <td className='data-list'>{data.blowout}</td>
-                        <td className='data-list'>{data.dave}</td>
-                        <td className='data-list'>{data.steel}</td>
-                        <td className='data-list'>{data.rbi}</td>
-                        <td className='data-edit'>
-                            <button className="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">Edit</button>
-                            <ul className="dropdown-menu">
-                                <li><a key="edit" className="dropdown-item btn">Edit</a></li>
-                                <li><a key="delete" className="dropdown-item link-danger btn">Delete</a></li>
-                            </ul>
-                        </td>
-                    </tr>
-                    </>  
-                )
-            })}
-            </tbody>
-        </table> 
-        </>
-    )
-}
+import Table from './Tabeledit'
+import Pagination from './Pagination'
 
 function DataEditor() {
     const [basketballdata, setBasketballdata] = useState([]);
@@ -103,28 +61,36 @@ function DataEditor() {
     
     const BasketballTable = () => {
         if (displayTable === 'Basketball'){
-            return table(basketballdata, 'Basketball');
+            return (
+                    <Table dataset={basketballdata} title='Basketball'/>
+              )
         } else {
             return
         };
     } 
     const BaseballTable = () => {
         if (displayTable === 'Baseball') {
-          return table(baseballdata, 'Baseball');
+          return (
+                <Table dataset={baseballdata} title='Baseball'/>
+          )
         } else {
             return
         };
     } 
     const FootballTable = () => {
         if (displayTable === 'Football') {
-           return table(footballdata, 'Football');
+           return (
+                <Table dataset={footballdata} title='Football'/>
+          )
         } else {
             return
         };
     } 
     const OtherTable = () => {
         if (displayTable === 'Other') {
-            return table(otherdata, 'Other');
+            return (
+                    <Table dataset={otherdata} title='Other'/>
+              )
         } else {
             return
         };
@@ -140,12 +106,10 @@ function DataEditor() {
                         <button onClick={changeTable} className="btn btn-outline-dark">Other</button>
                 </div>
                <br/><br/>
-                <div className='row'>
                     <BasketballTable/>
                     <BaseballTable/>
                     <FootballTable/>
                     <OtherTable/>
-                </div>
             </div>
         </>
     )

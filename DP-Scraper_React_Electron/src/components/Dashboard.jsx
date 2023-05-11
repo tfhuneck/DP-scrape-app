@@ -2,13 +2,16 @@ import '../index.css';
 import Card from './Component'
 import DataDisplay from './DataDisplay';
 import Loading from './Loading';
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 
 function Consolelogger() {
-    window.consoleLogApi.sendConsole((event, message) => {
-        console.log(message);
-        document.getElementById('terminal').insertAdjacentHTML('beforeend', message + "<br>")
-    })
+
+    useEffect(() => {
+        window.consoleLogApi.sendConsole((event, message) => {
+            console.log(message);
+            document.getElementById('terminal').insertAdjacentHTML('beforeend', message + "<br>")
+        })
+    }, []);    
         
     return (
         <>
