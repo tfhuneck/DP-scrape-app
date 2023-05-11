@@ -1,9 +1,6 @@
 import '../index.css';
 import Card from './Component';
 import DataEditor from './DataEditor';
-import { useState, useEffect } from 'react'
-
-
 
 function Entry() {
 //=======Function that sends data via Bridge to electron.js to be saved to data.json=========
@@ -19,16 +16,16 @@ function Entry() {
         };
         console.log(product);
 
-        if(document.getElementById('type').value == 'Basketball') {
+        if(document.getElementById('type').value === 'Basketball') {
             window.saveBasketballApi.saveData(product);
         }
-        if(document.getElementById('type').value == 'Baseball') {
+        if(document.getElementById('type').value === 'Baseball') {
             window.saveBaseballApi.saveData(product);
         }
-        if(document.getElementById('type').value == 'Football') {
+        if(document.getElementById('type').value === 'Football') {
             window.saveFootballApi.saveData(product);
         }
-        if(document.getElementById('type').value == 'Other') {
+        if(document.getElementById('type').value === 'Other') {
             window.saveOtherApi.saveData(product);
         }
         alert('Entry Submitted')

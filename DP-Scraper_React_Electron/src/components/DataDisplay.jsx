@@ -1,40 +1,6 @@
 import { useState, useEffect } from 'react';
-
-const table = (dataset, title) => {
-    return (
-        <>
-        <h1>{title}</h1>
-        <table className='table table-dark table-striped table-hover'>
-            <thead>
-                <tr>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">D&P</th>
-                    <th scope="col">Blowout</th>
-                    <th scope="col">Dave&Adams</th>
-                    <th scope="col">Steel City</th>
-                    <th scope="col">Rbi Cru7</th>
-                </tr>
-            </thead>
-            <tbody>
-            {dataset.map((data, key) => {
-                return (
-                    <>
-                    <tr key={key}>
-                        <td className='pname'>{data.name}</td>
-                        <td className='data-list'>{data.dandp}</td>
-                        <td className='data-list'>{data.blowout}</td>
-                        <td className='data-list'>{data.dave}</td>
-                        <td className='data-list'>{data.steel}</td>
-                        <td className='data-list'>{data.rbi}</td>
-                    </tr>
-                    </>  
-                )
-            })}
-            </tbody>
-        </table> 
-        </>
-    )
-}
+import Table from './Tabledisplay';
+import Pagination from './Pagination';
 
 
 function DataDisplay() {
@@ -44,6 +10,10 @@ function DataDisplay() {
     const [otherdata, setOtherdata] = useState([]);
     const [displayTable, setDisplayTable] = useState('Basketball');
 
+    function refreshPage() {
+        window.location.reload(false);
+      }
+    
     const changeTable = (e) => {
         let choice = e.target.innerHTML;
         console.log(choice);
@@ -95,33 +65,40 @@ function DataDisplay() {
 
     const BasketballTable = () => {
         if (displayTable === 'Basketball'){
-            return table(basketballdata, 'Basketball');
+            return (
+                    <Table dataset={basketballdata} title='Basketball'/>
+              )
         } else {
             return
         };
     } 
     const BaseballTable = () => {
         if (displayTable === 'Baseball') {
-          return table(baseballdata, 'Baseball');
+          return (
+                <Table dataset={baseballdata} title='Baseball'/>
+          )
         } else {
             return
         };
     } 
     const FootballTable = () => {
         if (displayTable === 'Football') {
-           return table(footballdata, 'Football');
+           return (
+                <Table dataset={footballdata} title='Football'/>
+          )
         } else {
             return
         };
     } 
     const OtherTable = () => {
         if (displayTable === 'Other') {
-            return table(otherdata, 'Other');
+            return (
+                    <Table dataset={otherdata} title='Other'/>
+              )
         } else {
             return
         };
     } 
-
     return (
         <>
             <div className='container-fluid'>
@@ -131,6 +108,7 @@ function DataDisplay() {
                             <button onClick={changeTable} className="btn btn-dark">Football</button>
                             <button onClick={changeTable} className="btn btn-dark">Other</button>
                     </div>
+                    <button className='btn btn-outline-dark refresh' onClick={refreshPage}>Refresh Table</button>
                 <br/><br/>
                 <BasketballTable/>
                 <BaseballTable/>
