@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import Table from './Tabledisplay';
-import Pagination from './Pagination';
-
 
 function DataDisplay() {
     const [basketballdata, setBasketballdata] = useState([]);

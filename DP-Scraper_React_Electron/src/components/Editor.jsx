@@ -1,8 +1,22 @@
 import '../index.css';
 import Card from './Component';
 import DataEditor from './DataEditor';
+import { useState, useEffect } from 'react';
 
 function Entry() {
+const [editData, setEditData] = useState([]);
+    
+useEffect(() => {
+    console.log(editData)
+    document.getElementById('pname').value = editData.map((i) => {return i.name});
+    document.getElementById('dandp').value = editData.map((i) => {return i.dandp});
+    document.getElementById('blowout').value = editData.map((i) => {return i.blowout});
+    document.getElementById('dave').value = editData.map((i) => {return i.dave});
+    document.getElementById('steel').value = editData.map((i) => {return i.steel});
+    document.getElementById('rbi').value = editData.map((i) => {return i.rbi});
+       
+},[editData, setEditData])
+    
 //=======Function that sends data via Bridge to electron.js to be saved to data.json=========
     const dataSend = (event)=> {
         // event.preventDefault();
@@ -66,7 +80,7 @@ function Entry() {
         <Card 
             class="editor overflow-x-scroll"
             header="DATA EDITOR"
-            body={(<DataEditor/>)}
+            body={(<DataEditor setEditData={setEditData}/>)}
         />
         </> 
     )

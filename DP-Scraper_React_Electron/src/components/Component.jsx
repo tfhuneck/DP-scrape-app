@@ -1,19 +1,8 @@
-import '../index.css';
-
-const Component = () => {
-    return (
-        <>
-        </>
-    )
-}
-
 const Card = (props) => {
-
     const classes = () => {
         const clss = props.class ? ' ' + props.class  : '';
         return 'card' + clss;
     }
-
     return (
         <div className={classes()}>
             <div className="card-header">{props.header}</div>
@@ -25,8 +14,6 @@ const Card = (props) => {
         </div>
     )
 }
-
-
 
 export default Card;
 

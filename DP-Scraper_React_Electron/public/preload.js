@@ -25,6 +25,24 @@ contextBridge.exposeInMainWorld('saveOtherApi', {
   saveData: (data) => ipcRenderer.send('saveOther', data)
 })
 
+//=========Bridges for deleting Data=========
+// =======Bridge for saving Basketball Data=======
+contextBridge.exposeInMainWorld('deleteBasketballApi', {
+  deleteData: (data) => ipcRenderer.send('deleteBasketball', data)
+})
+// =======Bridge for saving Baseball Data=======
+contextBridge.exposeInMainWorld('deleteBaseballApi', {
+  deleteData: (data) => ipcRenderer.send('deleteBaseball', data)
+})
+// =======Bridge for saving Football Data=======
+contextBridge.exposeInMainWorld('deleteFootballApi', {
+  deleteData: (data) => ipcRenderer.send('deleteFootball', data)
+})
+// =======Bridge for saving Other Data=======
+contextBridge.exposeInMainWorld('deleteOtherApi', {
+  deleteData: (data) => ipcRenderer.send('deleteOther', data)
+})
+
 // =======Bridge for Reading Json Files========
 // ========Bridge for getting Basketball Data=========
 contextBridge.exposeInMainWorld('getBasketballApi', {
@@ -105,4 +123,22 @@ contextBridge.exposeInMainWorld('scrapeAllApi', {
   scrapeAll: () => ipcRenderer.invoke('scrapeall').then((result) => {
     return result;
   })
+})
+
+// =============Printing to PDF and Saving Data=========
+//==============Printing Basketball================
+contextBridge.exposeInMainWorld('printBasketballApi', {
+  printData: () => ipcRenderer.send('printBasketball')
+})
+//==============Printing Baseball================
+contextBridge.exposeInMainWorld('printBaseballApi', {
+  printData: () => ipcRenderer.send('printBaseball')
+})
+//==============Printing Baseball================
+contextBridge.exposeInMainWorld('printFootballApi', {
+  printData: () => ipcRenderer.send('printFootball')
+})
+//==============Printing Baseball================
+contextBridge.exposeInMainWorld('printOtherApi', {
+  printData: () => ipcRenderer.send('printOther')
 })

@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
 import Table from './Tabeledit'
-import Pagination from './Pagination'
 
-function DataEditor() {
+function DataEditor({setEditData}) {
     const [basketballdata, setBasketballdata] = useState([]);
     const [baseballdata, setBaseballdata] = useState([]);
     const [footballdata, setFootballdata] = useState([]);
     const [otherdata, setOtherdata] = useState([]);
     const [displayTable, setDisplayTable] = useState('Basketball');
     
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     const changeTable = (e) => {
         let choice = e.target.innerHTML;
         console.log(choice);
         setDisplayTable(choice);
     }
-
+    //=========Fetch data from json files=========
     useEffect(() => {
         window.getBasketballApi.getData()
         .then((response) => {
@@ -25,7 +28,6 @@ function DataEditor() {
             console.error(error);
           });
     },[])
-
     useEffect(() => {
         window.getBaseballApi.getData()
         .then((response) => {
@@ -36,7 +38,6 @@ function DataEditor() {
             console.error(error);
           });
     },[])
-
     useEffect(() => {
         window.getFootballApi.getData()
         .then((response) => {
@@ -47,7 +48,6 @@ function DataEditor() {
             console.error(error);
           });
     },[])
-
     useEffect(() => {
         window.getOtherApi.getData()
         .then((response) => {
@@ -62,7 +62,7 @@ function DataEditor() {
     const BasketballTable = () => {
         if (displayTable === 'Basketball'){
             return (
-                    <Table dataset={basketballdata} title='Basketball'/>
+                    <Table dataset={basketballdata} setEditData={setEditData} title='Basketball'/>
               )
         } else {
             return
@@ -71,7 +71,7 @@ function DataEditor() {
     const BaseballTable = () => {
         if (displayTable === 'Baseball') {
           return (
-                <Table dataset={baseballdata} title='Baseball'/>
+                <Table dataset={baseballdata} setEditData={setEditData} title='Baseball'/>
           )
         } else {
             return
@@ -80,7 +80,7 @@ function DataEditor() {
     const FootballTable = () => {
         if (displayTable === 'Football') {
            return (
-                <Table dataset={footballdata} title='Football'/>
+                <Table dataset={footballdata} setEditData={setEditData} title='Football'/>
           )
         } else {
             return
@@ -89,7 +89,7 @@ function DataEditor() {
     const OtherTable = () => {
         if (displayTable === 'Other') {
             return (
-                    <Table dataset={otherdata} title='Other'/>
+                    <Table dataset={otherdata} setEditData={setEditData} title='Other'/>
               )
         } else {
             return
@@ -105,6 +105,7 @@ function DataEditor() {
                         <button onClick={changeTable} className="btn btn-outline-dark">Football</button>
                         <button onClick={changeTable} className="btn btn-outline-dark">Other</button>
                 </div>
+                <button className='btn btn-outline-dark refresh' onClick={refreshPage}>Refresh Table</button>
                <br/><br/>
                     <BasketballTable/>
                     <BaseballTable/>

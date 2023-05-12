@@ -32,22 +32,21 @@ head {
   font-size: 3em;
   text-transform: uppercase;
 }
-#title {
+/* #title {
   font-size: 1.5em;
   font-weight: bold;
   overflow: hidden;
-}
+} */
 nav {
   margin-left: 0.5em;
   height: 65vh;
   width: 15vw;
   filter: drop-shadow(0 0 0.5rem #192223);
 }
-.active{
-  color:#f2f2f2;
-}
+
 .navbtn {
-  margin-top: 0.1em;
+  color: #99999b;
+  margin-top: 0em;
   width: 15vw;
   height: 10vh;
   font-size: 1em;
@@ -64,15 +63,14 @@ nav {
 }
 .navbtn:hover .translate {
   left: 0;
+  color: white !important;
 }
 .navbtntext {
-  color: #90949d;
   position: relative;
-  transition: all .2s ease-Out;
+  padding-top: 12%;
+  height: 8vh;
+  transition: all .3s ease-Out;
   text-decoration: none;
-}
-.navbtntext :hover {
-  color: white !important;
 }
 .translate {
   /* transform: rotate(35deg); */
@@ -114,7 +112,7 @@ nav {
   }
 }
 .card {
-  background-image: linear-gradient(#e0e6ea, #bab8b8); 
+  background-image: linear-gradient(#f7f7f7, #a1a6a8); 
   filter: drop-shadow(0 0 0.5rem #192223);
 }
 .dashboard {

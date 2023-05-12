@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Pagination from './Pagination';
 
-const Table = ({dataset, title}) => {
+const Table = ({dataset, title, setEditData}) => {
     const [searchValue, setSearchValue] = useState('');
     const [filteredData, setFilteredData] = useState(dataset)
     const [currentPage, setCurrentPage] = useState(1);   
@@ -10,6 +10,50 @@ const Table = ({dataset, title}) => {
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;  
     const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
     const nPages = Math.ceil(filteredData.length / recordsPerPage)
+    
+
+
+    const editItem = (data) => {
+        let filtered = dataset.filter((i) => {
+            return i == data  
+        })
+        console.log(filtered);
+        if(document.getElementById('title').innerText === 'Basketball') {
+            window.deleteBasketballApi.deleteData(filtered);
+        }
+        if(document.getElementById('title').innerText === 'Baseball') {
+            window.deleteBaseballApi.deleteData(filtered);
+        }
+        if(document.getElementById('title').innerText === 'Football') {
+            window.deleteFootballApi.deleteData(filtered);
+        }
+        if(document.getElementById('title').innerText === 'Other') {
+            window.deleteOtherApi.deleteData(filtered);
+        };
+        setEditData(filtered);
+    }
+
+    const deleteItem = (data) => {
+        let filtered = dataset.filter((i) => {
+            return i == data  
+        })
+        console.log(filtered)
+
+        if(document.getElementById('title').innerText === 'Basketball') {
+            window.deleteBasketballApi.deleteData(filtered);
+        }
+        if(document.getElementById('title').innerText === 'Baseball') {
+            window.deleteBaseballApi.deleteData(filtered);
+        }
+        if(document.getElementById('title').innerText === 'Football') {
+            window.deleteFootballApi.deleteData(filtered);
+        }
+        if(document.getElementById('title').innerText === 'Other') {
+            window.deleteOtherApi.deleteData(filtered);
+        };
+        alert('Item deleted');
+        window.location.reload(false);
+    }
 
     useEffect(() => {
         if (searchValue) {
@@ -33,7 +77,7 @@ const Table = ({dataset, title}) => {
         <div className="search">
             <input className="form-control search" type="text" placeholder="Search Products" value={searchValue} onChange={handleSearch}/>
         </div>
-        <h1>{title}</h1>
+        <h1 id='title'>{title}</h1>
         <table className='table table-light table-striped table-hover'>
             <thead>
                 <tr>
@@ -50,7 +94,7 @@ const Table = ({dataset, title}) => {
             {currentRecords.map((data, key) => {
                 return (
                     <>
-                    <tr key={key}>
+                    <tr id={key} key={key}>
                         <td className='pname'>{data.name}</td>
                         <td className='data-list'>{data.dandp}</td>
                         <td className='data-list'>{data.blowout}</td>
@@ -60,8 +104,8 @@ const Table = ({dataset, title}) => {
                         <td className='data-edit'>
                             <button className="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">Edit</button>
                             <ul className="dropdown-menu">
-                                <li><a key="edit" className="dropdown-item btn">Edit</a></li>
-                                <li><a key="delete" className="dropdown-item link-danger btn">Delete</a></li>
+                                <li><a id={key} key="edit" onClick={() => editItem(data)} className="dropdown-item btn">Edit</a></li>
+                                <li><a id={key} key="delete" onClick={() => deleteItem(data)} className="dropdown-item link-danger btn">Delete</a></li>
                             </ul>
                         </td>
                     </tr>
