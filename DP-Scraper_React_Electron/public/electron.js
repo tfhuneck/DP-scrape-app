@@ -1,4 +1,5 @@
 const electron = require('electron');
+const { dialog } = require('electron')
 const { app, BrowserWindow,  ipcMain } = electron;
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -8,6 +9,7 @@ const cheerio = require('cheerio');
 const chromedriver = require('chromedriver');
 const {Builder, By, Key,} = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome'); 
+const os = require('os')
 
 //==========Core Electron function loading & closing App================
 let mainWindow = null;
@@ -63,6 +65,24 @@ const saveData = (destination, data) => {
     console.log("Data Saved"); 
   } 
 }
+
+//============Deleting selected Item from file========
+const deleteData = (destination, data) => {
+  const readData = fs.readFileSync(destination);
+  const parsedData = JSON.parse(readData);
+  console.log(data)
+  console.log(parsedData)
+  const filtered = parsedData.filter((el) => {
+    return data.some((f) => {
+      return el.name !== f.name;
+    })
+  })
+  console.log(filtered);
+  const dataStr = JSON.stringify(filtered);
+  fs.writeFileSync(destination, dataStr);
+  console.log("Item Deleted"); 
+}
+
 // =======Save Basketball Data============
 ipcMain.on("saveBasketball", (event, data) => {
    saveData("./src/json/basketballdata.json", data);
@@ -78,6 +98,24 @@ ipcMain.on("saveFootball", (event, data) => {
 // =======Save Other Data============
 ipcMain.on("saveOther", (event, data) => {
    saveData("./src/json/otherdata.json", data);
+});
+
+//===========Delete Items in Data Editor=========
+// =======delete Basketball Data============
+ipcMain.on("deleteBasketball", (event, data) => {
+  deleteData("./src/json/basketballdata.json", data);
+});
+// =======delete Baseball Data============
+ipcMain.on("deleteBaseball", (event, data) => {
+  deleteData("./src/json/baseballdata.json", data); 
+});
+// =======delete Football Data============
+ipcMain.on("deleteFootball", (event, data) => {
+   deleteData("./src/json/footballdata.json", data);
+});
+// =======delete Other Data============
+ipcMain.on("deleteOther", (event, data) => {
+  deleteData("./src/json/otherdata.json", data);
 });
 
 // =========Read Data from JSON files and send to UI============
@@ -308,11 +346,11 @@ const getRbiPrice = async (url) => {
 }
 //============executing Scrapes============
 async function executeScrape() {
-    for (let i = 0; i < dandpUrls.length; i++) { 
-      await getDPPrice(dandpUrls[i])
-    };
     for (let i = 0; i < blowoutUrls.length; i++) { 
       await getBlowoutPrice(blowoutUrls[i])  
+    };
+    for (let i = 0; i < dandpUrls.length; i++) { 
+      await getDPPrice(dandpUrls[i])
     };
     for (let i = 0; i < daveUrls.length; i++) {
       await getDavePrice(daveUrls[i])
@@ -345,3 +383,46 @@ await executeScrape()
  .then(res => mainWindow.webContents.send('asynchronous-message', 'scrape complete'))
  .catch((error) => mainWindow.webContents.send('asynchronous-message', error))
 }
+
+//=====================Printing Data======================
+const printToPdf = async (url, fileName) => {
+  const win = new BrowserWindow({
+    width: 900,
+    height: 900,
+    maximized: false,
+    title: "Print Basketball",
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, "./preload.js")
+    }, 
+  });
+  const htmlPath = path.join(__dirname, url)
+  const pdfPath = path.join(os.homedir(), 'Desktop', fileName)
+  await win.loadFile(htmlPath)
+  .then(() => { setTimeout(() => {
+    win.webContents.printToPDF({}).then(data =>{
+          fs.writeFile(pdfPath, data, (error) => {
+          console.log('Write PDF succesfully');
+          dialog.showErrorBox(fileName,'saved to Desktop');
+        })
+    })}, 2000)
+  }) 
+};
+
+// =================Printing Basketball=============
+ipcMain.on('printBasketball', async () => {
+  printToPdf('../src/printBasketball.html','Basketball_Prices.pdf')
+});
+// =================Printing Baseball=============
+ipcMain.on('printBaseball', async () => {
+  printToPdf('../src/printBaseball.html','Baseball_Prices.pdf')
+});
+// =================Printing Football=============
+ipcMain.on('printFootball', async () => {
+  printToPdf('../src/printFootball.html','Football_Prices.pdf')
+});
+// =================Printing Football=============
+ipcMain.on('printOther', async () => {
+  printToPdf('../src/printOther.html','Other_Prices.pdf')
+});

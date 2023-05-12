@@ -5,7 +5,7 @@ import Dashboard from './components/Dashboard';
 import Entry from './components/Editor';
 import Navbar from './components/Navbar';
 import dplogo from './dplogo.png';
-
+import DataExport from './components/PrintData'
 
 const App = () => {
 
@@ -21,6 +21,7 @@ const App = () => {
                         <Routes>
                             <Route path='/' element={<Dashboard />} />
                             <Route path='/entry' element={<Entry />} />
+                            <Route path='/export' element={<DataExport />} />
                         </Routes>
                     </div>
                 </div>
