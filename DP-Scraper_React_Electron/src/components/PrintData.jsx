@@ -1,6 +1,7 @@
 import '../index.css';
 import Card from './Component'
 import DataDisplay from './DataDisplay';
+import PrintSelector from './PrintSelector';
 
 function DataExport() {
 
@@ -22,6 +23,7 @@ function DataExport() {
          <Card
         class="dashboard"
         header="Data Export"
+        title="Export Full Price Lists to PDF"
         body={(
             <>
             <div className='container-fluid'></div>
@@ -35,8 +37,9 @@ function DataExport() {
         <br/>
             <Card 
                 class="editor overflow-x-scroll"
-                header="PRICE DATA"
-                body={(<DataDisplay/>)}
+                header="Print Data Selector"
+                title="Select the Products you want to print"
+                body={(<PrintSelector/>)}
             />
         </>
     )
