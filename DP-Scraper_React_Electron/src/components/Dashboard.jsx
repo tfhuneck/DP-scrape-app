@@ -17,7 +17,7 @@ function Consolelogger() {
         <>
         <div className='console-log'>
             <span id='terminal'></span>
-            <h6>Console ...</h6>
+            <h7>Console ...</h7>
         </div>
         </>
     )
