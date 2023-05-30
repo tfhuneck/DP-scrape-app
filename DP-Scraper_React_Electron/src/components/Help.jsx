@@ -138,8 +138,9 @@ function Help() {
                     <img src={editor}  className='img-fluid'/> 
                     <p>
                         <h5>Important Notes</h5>
+                        <h6>BE ADVISED!</h6>
                         If the product is not available on one or multiple of the sites, enter a place holder symbol in the url filed instead of the url! <br />
-                        This could include 'N/A' or '/' or '-' or '#'. This way the scrape will return a blank value for this product and the price data will be displayed correctly.
+                        This could include: 'N/A' or '/' or '-' or '#'. This way the scrape will return a blank value for this product and the price data will be displayed correctly.
                     </p>
                 </> 
             )}
@@ -273,7 +274,7 @@ function Help() {
                         The fields are designated for specific files, and are labeled accordingly. It is important to upload the correct files in the correct filds, to recover the data correctly.
                         Simply click on the field and select to correct file, or drag and drop the file on the field. You can upload / recover 1 or more files at a time, or all four files at the same time.
                         Once you have uploaded the files in the fields, select the 'Upload Back Data' button at the buttom. An alert will signal that the upload was successful.
-                        You can check if the data is correctly updated by going to the data editor and refreshing the table, and check if the data is complete and correct. If the data is not correct repeat the 
+                        You can check if the data is correctly updated by going to the data editor and refresh the table, and check if the data is complete and correct. If the data is not correct repeat the 
                         upload / recovery proccess. <br /><br />
                         <h6>BE ADVISED! The recovery proccess will overwrite the entry data in your application. Make sure to regulary backup your data to ensure no data is lost.</h6>
                     </p>
