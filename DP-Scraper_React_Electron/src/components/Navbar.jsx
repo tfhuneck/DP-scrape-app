@@ -37,7 +37,7 @@ function Navbar() {
                 <Navbutton
                     title='Data Editor'
                     id='editor'
-                    to="/entry"
+                    to="/editor"
                 /> 
                 <Navbutton
                     title='Print Prices'

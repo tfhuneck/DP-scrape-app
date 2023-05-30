@@ -22,7 +22,7 @@ function PrintBasketball() {
         <>
         <h4>Basketball Price Data</h4>
         printed on: {today}
-        <table className='table table-light table-striped table-hover'>
+        <table className='table table-light table-striped'>
             <thead>
                 <tr>
                     <th scope="col">Product Name</th>
