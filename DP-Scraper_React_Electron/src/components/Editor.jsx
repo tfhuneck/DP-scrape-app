@@ -3,7 +3,7 @@ import Card from './Component';
 import DataEditor from './DataEditor';
 import { useState, useEffect } from 'react';
 
-function Entry() {
+function Editor() {
 const [editData, setEditData] = useState([]);
     
 useEffect(() => {
@@ -86,4 +86,4 @@ useEffect(() => {
     )
 }
 
-export default Entry;
+export default Editor;

@@ -362,7 +362,7 @@ async function executeScrape() {
       await getRbiPrice(rbiUrls[i])
     };
   //===========Using For Loop to save Data to Scraped Json FIle==============
-    mainWindow.webContents.send('asynchronous-message', names + dandpPrices + blowoutPrices + davePrices + steelPrices + rbiPrices);
+  mainWindow.webContents.send('asynchronous-message', names + dandpPrices + blowoutPrices + davePrices + steelPrices + rbiPrices);
     for(let i = 0; i < names.length; i++) {
       let prices ={
        name: names[i],
@@ -422,7 +422,84 @@ ipcMain.on('printBaseball', async () => {
 ipcMain.on('printFootball', async () => {
   printToPdf('../src/printFootball.html','Football_Prices.pdf')
 });
-// =================Printing Football=============
+// =================Printing Other=============
 ipcMain.on('printOther', async () => {
   printToPdf('../src/printOther.html','Other_Prices.pdf')
+});
+
+//==================Print Selected==================
+// =================Get Selected Data to Filter=============
+ipcMain.handle('getSelected', (event, arg) => {
+  const response = JSON.parse(fs.readFileSync("./src/json/selectedData.json"));
+  return response;
+})
+// =================Printing Selected Function=============
+const printSelected = (data, pricedata, printUrl, printPdf) => {
+  const readData = fs.readFileSync(pricedata);
+  const parsedData = JSON.parse(readData);
+  console.log(data)
+  // console.log(parsedData)
+    let selected = parsedData.filter((el) => {
+      return data.some((f) => {
+        return el.name == f;
+      }) 
+    })
+  console.log(selected)
+  let dataStr = JSON.stringify(selected)
+  fs.writeFileSync("./src/json/selectedData.json", dataStr)
+  printToPdf(printUrl, printPdf);
+}
+//=====================Print Selected Basketball==================
+ipcMain.on('printSelectedBasketball', async (event, data) => {
+  printSelected(data, './src/json/basketballscraped.json', '../src/printSelectedBasketball.html', 'Selected_Pricelist_Basketball.pdf')
+});
+//=====================Print Selected Baseball==================
+ipcMain.on('printSelectedBaseball', async (event, data) => {
+  printSelected(data, './src/json/baseballscraped.json', '../src/printSelectedbaseball.html', 'Selected_Pricelist_Baseball.pdf')
+});
+//=====================Print Selected Football==================
+ipcMain.on('printSelectedFootball', async (event, data) => {
+  printSelected(data, './src/json/footballscraped.json', '../src/printSelectedFootball.html', 'Selected_Pricelist_Football.pdf')
+});
+//=====================Print Selected Other==================
+ipcMain.on('printSelectedOther', async (event, data) => {
+  printSelected(data, './src/json/otherscraped.json', '../src/printSelectedOther.html', 'Selected_Pricelist_Other.pdf')
+});
+
+//===================Back Up All Data=============
+ipcMain.on('Backup', () => {
+  const backupPath = (fileName) => {
+    const filepath = path.join(os.homedir(), 'Desktop', 'Price-Scraper-Backup', fileName)
+    return filepath;
+  }
+  const dir = path.join(os.homedir(), 'Desktop', 'Price-Scraper-Backup',)
+  const basketball = fs.readFileSync('./src/json/basketballdata.json');
+  const baseball = fs.readFileSync('./src/json/baseballdata.json');
+  const football = fs.readFileSync('./src/json/footballdata.json');
+  const other = fs.readFileSync('./src/json/otherdata.json');
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+  fs.writeFileSync(backupPath('basketballdata.json'), basketball);
+  fs.writeFileSync(backupPath('baseballdata.json'), baseball);
+  fs.writeFileSync(backupPath('footballdata.json'), football);
+  fs.writeFileSync(backupPath('otherdata.json'), other);
+});
+
+//======================Recover Data=================
+ipcMain.on('RecoverBasketball', (event, data) => {
+  const dataStr = JSON.stringify(data)
+  fs.writeFileSync("./src/json/basketballdata.json", dataStr);
+});
+ipcMain.on('RecoverBaseball', (event, data) => {
+  const dataStr = JSON.stringify(data)
+  fs.writeFileSync("./src/json/baseballdata.json", dataStr);
+});
+ipcMain.on('RecoverFootball', (event, data) => {
+  const dataStr = JSON.stringify(data)
+  fs.writeFileSync("./src/json/footballdata.json", dataStr);
+});
+ipcMain.on('RecoverOther', (event, data) => {
+  const dataStr = JSON.stringify(data)
+  fs.writeFileSync("./src/json/otherdata.json", dataStr);
 });

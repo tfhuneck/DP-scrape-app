@@ -22,22 +22,22 @@ function DataExport() {
         <>
          <Card
         class="dashboard"
-        header="Data Export"
+        header="DATA PRINT EXPORT"
         title="Export Full Price Lists to PDF"
         body={(
             <>
             <div className='container-fluid'></div>
-            <button onClick={printBasketball} className='btn btn-outline-dark'>Print Basketball Data</button>
-            <button onClick={printBaseball} className='btn btn-outline-dark'>Print Baseball Data</button>
-            <button onClick={printFootball} className='btn btn-outline-dark'>Print Football Data</button>
-            <button onClick={printOther} className='btn btn-outline-dark'>Print Other Data</button>
+            <button onClick={printBasketball} className='btn btn-outline-dark'>Export Basketball Price Data</button>
+            <button onClick={printBaseball} className='btn btn-outline-dark'>Export Baseball Price Data</button>
+            <button onClick={printFootball} className='btn btn-outline-dark'>Export Football Price Data</button>
+            <button onClick={printOther} className='btn btn-outline-dark'>Export Other Price Data</button>
             </>
         )}
         />
         <br/>
             <Card 
                 class="editor overflow-x-scroll"
-                header="Print Data Selector"
+                header="PRINT PRICE DATA SELECTOR"
                 title="Select the Products you want to print"
                 body={(<PrintSelector/>)}
             />

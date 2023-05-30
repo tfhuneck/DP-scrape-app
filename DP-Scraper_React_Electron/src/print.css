@@ -1,0 +1,37 @@
+.price-menu{
+    background:#f7f7f7; 
+}
+.dplogo {
+    height: 20vmin;
+    width:  20vmin;
+    filter: drop-shadow(0 0 0.5rem #192223);
+    margin-bottom: 1vh;
+    margin-left: 2vw;
+  }
+.socials {
+    margin-top: 2em;
+    display: block;
+    float: right;
+    height: 20vmin;
+    width:  20vmin;
+  }
+h2{ 
+    display: inline-flex;
+    margin-left: 1em;
+}
+table tbody td{
+    border: none;
+
+  }
+  table thead th:first-child {
+    border-radius: 10px 0 0 0;
+  }
+  table thead th:last-child {
+    border-radius: 0 10px 0 0;
+  }
+  table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 10px;
+  }
+  table tbody tr:last-child td:last-child {
+    border-radius: 0 0 10px 0;
+  }

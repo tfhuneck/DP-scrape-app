@@ -1,6 +1,6 @@
 body {
   color: #f2f2f2;
-  text-align: center;
+  /* text-align: center; */
   background-color: #3b3e43;
   height: 100vh;
   margin: 1em;
@@ -188,3 +188,4 @@ td {
   display: flex;
   float: right;
 }
+

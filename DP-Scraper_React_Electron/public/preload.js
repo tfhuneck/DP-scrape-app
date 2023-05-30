@@ -142,3 +142,46 @@ contextBridge.exposeInMainWorld('printFootballApi', {
 contextBridge.exposeInMainWorld('printOtherApi', {
   printData: () => ipcRenderer.send('printOther')
 })
+
+//==============Printing Selected Data==================
+//===============Get Selected Data to Filter==============
+contextBridge.exposeInMainWorld('getSelectedApi', {
+  getData: (channel, data) => ipcRenderer.invoke('getSelected', data).then((result) => {
+    return result;
+  })
+})
+//==============Printing Selected Basketball================
+contextBridge.exposeInMainWorld('printSelectedBasketballApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedBasketball', data)
+})
+//==============Printing Selected Baseball================
+contextBridge.exposeInMainWorld('printSelectedBaseballApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedBaseball', data)
+})
+//==============Printing Selected Football================
+contextBridge.exposeInMainWorld('printSelectedFootballApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedFootball', data)
+})
+//==============Printing Selected Other================
+contextBridge.exposeInMainWorld('printSelectedOtherApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedOther', data)
+})
+
+// ==================Backup all Data===================
+contextBridge.exposeInMainWorld('BackupApi', {
+  backupData: () => ipcRenderer.send('Backup')
+})
+
+//==================Recover Data==================
+contextBridge.exposeInMainWorld('RecoverBasketballApi', {
+  upload: (data) => ipcRenderer.send('RecoverBasketball', data)
+})
+contextBridge.exposeInMainWorld('RecoverBaseballApi', {
+  upload: (data) => ipcRenderer.send('RecoverBaseball', data)
+})
+contextBridge.exposeInMainWorld('RecoverFootballApi', {
+  upload: (data) => ipcRenderer.send('RecoverFootball', data)
+})
+contextBridge.exposeInMainWorld('RecoverOtherApi', {
+  upload: (data) => ipcRenderer.send('RecoverOther', data)
+})

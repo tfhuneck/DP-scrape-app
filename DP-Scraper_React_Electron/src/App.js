@@ -2,10 +2,11 @@ import './index.css';
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
-import Entry from './components/Editor';
+import Editor from './components/Editor';
 import Navbar from './components/Navbar';
 import dplogo from './dplogo.png';
 import DataExport from './components/PrintData'
+import Backup from './components/Backup ';
 
 const App = () => {
 
@@ -20,8 +21,9 @@ const App = () => {
                     <div className='col offset-2 two'>
                         <Routes>
                             <Route path='/' element={<Dashboard />} />
-                            <Route path='/entry' element={<Entry />} />
+                            <Route path='/editor' element={<Editor/>} />
                             <Route path='/export' element={<DataExport />} />
+                            <Route path='/backup' element={<Backup />} />
                         </Routes>
                     </div>
                 </div>
