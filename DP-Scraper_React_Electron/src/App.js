@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Editor from './components/Editor';
 import Navbar from './components/Navbar';
-import dplogo from './dplogo.png';
+import dplogo from './images/dplogo.png';
 import DataExport from './components/PrintData'
 import Backup from './components/Backup ';
+import Help from './components/Help';
 
 const App = () => {
 
@@ -24,6 +25,7 @@ const App = () => {
                             <Route path='/editor' element={<Editor/>} />
                             <Route path='/export' element={<DataExport />} />
                             <Route path='/backup' element={<Backup />} />
+                            <Route path='/help' element={<Help/>} />
                         </Routes>
                     </div>
                 </div>

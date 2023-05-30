@@ -20,8 +20,8 @@ function PrintSelected() {
     
     return (
         <div className="price-menu">
-            <img src='./dplogo.png' className='dplogo img-fluid' />
-            <img src='./socials.png' className='socials img-fluid'/>
+            <img src='./images/dplogo.png' className='dplogo img-fluid' />
+            <img src='./images/socials.png' className='socials img-fluid'/>
             <h2>Football Products Price List</h2>
             <table className='table table-light table-striped'>
                 <thead>
