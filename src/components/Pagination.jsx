@@ -15,8 +15,7 @@ const Pagination = ({ nPages, currentPage, setCurrentPage }) => {
                 <li className="page-item">
                     <a className="btn btn-outline-dark" 
                         onClick={prevPage} 
-                        href='#'>
-                        
+                    >
                         &laquo;
                     </a>
                 </li>
@@ -25,8 +24,7 @@ const Pagination = ({ nPages, currentPage, setCurrentPage }) => {
                         className= 'page-item' >
                         <a onClick={() => setCurrentPage(pgNumber)}  
                             className={`btn btn-outline-dark ${currentPage == pgNumber ? 'active' : ''} `} 
-                            href='#'>
-                            
+                        >
                             {pgNumber}
                         </a>
                     </li>
@@ -34,8 +32,7 @@ const Pagination = ({ nPages, currentPage, setCurrentPage }) => {
                 <li className="page-item">
                     <a className="btn btn-outline-dark" 
                         onClick={nextPage}
-                        href='#'>
-                        
+                    >
                         &raquo;
                     </a>
                 </li>

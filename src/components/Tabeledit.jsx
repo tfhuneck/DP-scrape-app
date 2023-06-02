@@ -11,8 +11,6 @@ const Table = ({dataset, title, setEditData}) => {
     const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
     const nPages = Math.ceil(filteredData.length / recordsPerPage)
     
-
-
     const editItem = (data) => {
         let filtered = dataset.filter((i) => {
             return i == data  
@@ -114,7 +112,7 @@ const Table = ({dataset, title, setEditData}) => {
             })}
             </tbody>
         </table> 
-        <Pagination nPages={nPages} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+        <Pagination nPages={nPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </>
     )
 }

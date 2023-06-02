@@ -41,8 +41,8 @@ function createWindow() {
       preload: path.join(__dirname, "./preload.js")
     }, 
   });
-  // mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
-  mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  // mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
   mainWindow.on('closed', function () {
     mainWindow = null
   })
@@ -195,7 +195,6 @@ ipcMain.handle('scrapeall', async (event, arg) => {
   await scrape(path.join(__dirname, "../src/json/otherdata.json"), path.join(__dirname, "../src/json/otherscraped.json"))
   return 'All Scrapes are Complete. All Price Data was updated.)' 
 });
-
 
 //=========Main Scrape function===========
 async function scrape(input, output) {
