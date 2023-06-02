@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
+window.ipcRenderer = ipcRenderer;
 const fs = require('fs');
 const path = require('path');
 

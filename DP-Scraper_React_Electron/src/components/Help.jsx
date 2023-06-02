@@ -34,7 +34,7 @@ import backup from '../images/backup.png';
 import backupalert from '../images/backupalert.png';
 import folder from '../images/folder.png';
 import recover from '../images/recover.png';
-import upload from '../images/upload.png'
+import upload from '../images/upload.png';
 
 function Help() {
     return (
