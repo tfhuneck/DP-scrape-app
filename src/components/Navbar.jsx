@@ -1,21 +1,30 @@
 import '../index.css';
-import { NavLink } from 'react-router-dom'
-import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+var activeState = JSON.parse(localStorage.getItem('active'));
 
  
 function Navbar() {
     const [active, setActive] = useState('dashboard')
+
+    useEffect(() => {
+        setActive(activeState);
+        }, []);
+    
+    useEffect(() => {
+        localStorage.setItem('active', JSON.stringify(active));
+        }, [active]);
+
     const Navbutton = ({id, to, title}) => {
         const classes = () => {
             const clss = (id === active) ? ' active' : '';
             return 'btn btn-outline-dark navbtn' + clss;
         }
-        const handleClick = (event) => {
-            let select = event.target.id;
-            setActive(select);
-            console.log(`active state updated to ${select}`);
-        }
-
+    const handleClick = (event) => {
+        let select = event.target.id;
+        setActive(select);
+        console.log(`active state updated to ${select}`); 
+    }
         return(
             <NavLink to={to}>
                     <button className={classes()}> 
