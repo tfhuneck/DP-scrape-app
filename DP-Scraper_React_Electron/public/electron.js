@@ -2,6 +2,7 @@ const electron = require('electron');
 const { dialog } = require('electron')
 const { app, BrowserWindow,  ipcMain } = electron;
 const path = require('path');
+const url = require('url');
 const isDev = require('electron-is-dev');
 const fs = require ('fs');
 const axios = require('axios');
@@ -9,7 +10,10 @@ const cheerio = require('cheerio');
 const chromedriver = require('chromedriver');
 const {Builder, By, Key,} = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome'); 
-const os = require('os')
+const os = require('os');
+
+//==========Comand for win32 app==========
+if (require('electron-squirrel-startup')) app.quit();
 
 //==========Core Electron function loading & closing App================
 let mainWindow = null;
@@ -37,7 +41,8 @@ function createWindow() {
       preload: path.join(__dirname, "./preload.js")
     }, 
   });
-  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../public/index.html')}`);
+  // mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
   mainWindow.on('closed', function () {
     mainWindow = null
   })
@@ -86,109 +91,109 @@ const deleteData = (destination, data) => {
 
 // =======Save Basketball Data============
 ipcMain.on("saveBasketball", (event, data) => {
-   saveData("./src/json/basketballdata.json", data);
+   saveData(path.join(__dirname,"../src/json/basketballdata.json"), data);
 });
 // =======Save Baseball Data============
 ipcMain.on("saveBaseball", (event, data) => {
-   saveData("./src/json/baseballdata.json", data); 
+   saveData(path.join(__dirname,"../src/json/baseballdata.json"), data); 
 });
 // =======Save Football Data============
 ipcMain.on("saveFootball", (event, data) => {
-    saveData("./src/json/footballdata.json", data);
+    saveData(path.join(__dirname,"../src/json/footballdata.json"), data);
 });
 // =======Save Other Data============
 ipcMain.on("saveOther", (event, data) => {
-   saveData("./src/json/otherdata.json", data);
+   saveData(path.join(__dirname,"../src/json/otherdata.json"), data);
 });
 
 //===========Delete Items in Data Editor=========
 // =======delete Basketball Data============
 ipcMain.on("deleteBasketball", (event, data) => {
-  deleteData("./src/json/basketballdata.json", data);
+  deleteData(path.join(__dirname,"../src/json/basketballdata.json"), data);
 });
 // =======delete Baseball Data============
 ipcMain.on("deleteBaseball", (event, data) => {
-  deleteData("./src/json/baseballdata.json", data); 
+  deleteData(path.join(__dirname,"../src/json/baseballdata.json"), data); 
 });
 // =======delete Football Data============
 ipcMain.on("deleteFootball", (event, data) => {
-   deleteData("./src/json/footballdata.json", data);
+   deleteData(path.join(__dirname,"../src/json/footballdata.json"), data);
 });
 // =======delete Other Data============
 ipcMain.on("deleteOther", (event, data) => {
-  deleteData("./src/json/otherdata.json", data);
+  deleteData(path.join(__dirname,"../src/json/otherdata.json"), data);
 });
 
 // =========Read Data from JSON files and send to UI============
 //=========Get Basketball data==========
 ipcMain.handle('getBasketball', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/basketballdata.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/basketballdata.json")));
   return response;
 })
 //=========Get Baseball data==========
 ipcMain.handle('getBaseball', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/baseballdata.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/baseballdata.json")));
   return response;
 })
 //=========Get Football data==========
 ipcMain.handle('getFootball', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/footballdata.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/footballdata.json")));
   return response;
 })
 //=========Get Other data==========
 ipcMain.handle('getOther', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/otherdata.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/otherdata.json")));
   return response;
 })
 //=========Get Scraped Basketball Price data==========
 ipcMain.handle('getBasketballPrice', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/basketballscraped.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/basketballscraped.json")));
   return response;
 })
 //=========Get Scraped Baseball Price data==========
 ipcMain.handle('getBaseballPrice', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/baseballscraped.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/baseballscraped.json")));
   return response;
 })
 //=========Get Scraped Football Price data==========
 ipcMain.handle('getFootballPrice', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/footballscraped.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/footballscraped.json")));
   return response;
 })
 //=========Get Scraped Other Price data==========
 ipcMain.handle('getOtherPrice', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/otherscraped.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname,"../src/json/otherscraped.json")));
   return response;
 })
 
 //============Scraping Functions=============
 //==========Scraping Basketball Prices=============
 ipcMain.handle('scrapebasketball', async (event, arg) => {
-  await scrape("./src/json/basketballdata.json", "./src/json/basketballscraped.json")
+  await scrape(path.join(__dirname, "../src/json/basketballdata.json"), path.join(__dirname, "../src/json/basketballscraped.json"))
   return 'The Scrape is Complete. Basketball Price Data was updated.' 
 });
 //==========Scraping Baseball Prices=============
 ipcMain.handle('scrapebaseball', async (event, arg) => {
-  await scrape("./src/json/baseballdata.json", "./src/json/baseballscraped.json")
+  await scrape(path.join(__dirname, "../src/json/baseballdata.json"), path.join(__dirname, "../src/json/baseballscraped.json"))
   return 'The Scrape is Complete. Baseball Price Data was updated.' 
 });
 //==========Scraping Football Prices=============
 ipcMain.handle('scrapefootball', async (event, arg) => {
-  await scrape("./src/json/footballdata.json", "./src/json/footballscraped.json")
+  await scrape(path.join(__dirname, "../src/json/footballdata.json"), path.join(__dirname, "../src/json/footballscraped.json"))
   return 'The Scrape is Complete. Football Price Data was updated.' 
 });
 //==========Scraping Other Prices=============
 ipcMain.handle('scrapeother', async (event, arg) => {
-  await scrape("./src/json/otherdata.json", "./src/json/otherscraped.json")
+  await scrape(path.join(__dirname, "../src/json/otherdata.json"), path.join(__dirname, "../src/json/otherscraped.json"))
   return 'The Scrape is Complete. Other Price Data was updated.' 
 });
 //==========Scraping All Prices=============
 ipcMain.handle('scrapeall', async (event, arg) => {
-  await scrape("./src/json/basketballdata.json", "./src/json/basketballscraped.json")
-  await scrape("./src/json/baseballdata.json", "./src/json/baseballscraped.json")
-  await scrape("./src/json/footballdata.json", "./src/json/footballscraped.json")
-  await scrape("./src/json/otherdata.json", "./src/json/otherscraped.json")
-  return 'All Scrapes are Complete. All Price Data was updated.' 
+  await scrape(path.join(__dirname, "../src/json/basketballdata.json"), path.join(__dirname, "../src/json/basketballscraped.json"))
+  await scrape(path.join(__dirname, "../src/json/baseballdata.json"), path.join(__dirname, "../src/json/baseballscraped.json"))
+  await scrape(path.join(__dirname, "../src/json/footballdata.json"), path.join(__dirname, "../src/json/footballscraped.json"))
+  await scrape(path.join(__dirname, "../src/json/otherdata.json"), path.join(__dirname, "../src/json/otherscraped.json"))
+  return 'All Scrapes are Complete. All Price Data was updated.)' 
 });
 
 
@@ -431,7 +436,7 @@ ipcMain.on('printOther', async () => {
 //==================Print Selected==================
 // =================Get Selected Data to Filter=============
 ipcMain.handle('getSelected', (event, arg) => {
-  const response = JSON.parse(fs.readFileSync("./src/json/selectedData.json"));
+  const response = JSON.parse(fs.readFileSync(path.join(__dirname, "../src/json/selectedData.json")));
   return response;
 })
 // =================Printing Selected Function=============
@@ -447,24 +452,24 @@ const printSelected = (data, pricedata, printUrl, printPdf) => {
     })
   console.log(selected)
   let dataStr = JSON.stringify(selected)
-  fs.writeFileSync("./src/json/selectedData.json", dataStr)
+  fs.writeFileSync(path.join(__dirname,"../src/json/selectedData.json"), dataStr)
   printToPdf(printUrl, printPdf);
 }
 //=====================Print Selected Basketball==================
-ipcMain.on('printSelectedBasketball', async (event, data) => {
-  printSelected(data, './src/json/basketballscraped.json', '../src/printSelectedBasketball.html', 'Selected_Pricelist_Basketball.pdf')
+ipcMain.on('printSelectedBasketball', (event, data) => {
+  printSelected(data, path.join(__dirname,'../src/json/basketballscraped.json'), '../src/printSelectedBasketball.html', 'Selected_Pricelist_Basketball.pdf')
 });
 //=====================Print Selected Baseball==================
-ipcMain.on('printSelectedBaseball', async (event, data) => {
-  printSelected(data, './src/json/baseballscraped.json', '../src/printSelectedbaseball.html', 'Selected_Pricelist_Baseball.pdf')
+ipcMain.on('printSelectedBaseball', (event, data) => {
+  printSelected(data, path.join(__dirname,'../src/json/baseballscraped.json'), '../src/printSelectedbaseball.html', 'Selected_Pricelist_Baseball.pdf')
 });
 //=====================Print Selected Football==================
-ipcMain.on('printSelectedFootball', async (event, data) => {
-  printSelected(data, './src/json/footballscraped.json', '../src/printSelectedFootball.html', 'Selected_Pricelist_Football.pdf')
+ipcMain.on('printSelectedFootball', (event, data) => {
+  printSelected(data, path.join(__dirname,'../src/json/footballscraped.json'), '../src/printSelectedFootball.html', 'Selected_Pricelist_Football.pdf')
 });
 //=====================Print Selected Other==================
-ipcMain.on('printSelectedOther', async (event, data) => {
-  printSelected(data, './src/json/otherscraped.json', '../src/printSelectedOther.html', 'Selected_Pricelist_Other.pdf')
+ipcMain.on('printSelectedOther', (event, data) => {
+  printSelected(data, path.join(__dirname,'../src/json/otherscraped.json'), '../src/printSelectedOther.html', 'Selected_Pricelist_Other.pdf')
 });
 
 //===================Back Up All Data=============
@@ -474,10 +479,10 @@ ipcMain.on('Backup', () => {
     return filepath;
   }
   const dir = path.join(os.homedir(), 'Desktop', 'Price-Scraper-Backup',)
-  const basketball = fs.readFileSync('./src/json/basketballdata.json');
-  const baseball = fs.readFileSync('./src/json/baseballdata.json');
-  const football = fs.readFileSync('./src/json/footballdata.json');
-  const other = fs.readFileSync('./src/json/otherdata.json');
+  const basketball = fs.readFileSync(path.join(__dirname,"../src/json/basketballdata.json"));
+  const baseball = fs.readFileSync(path.join(__dirname,"../src/json/baseballdata.json"));
+  const football = fs.readFileSync(path.join(__dirname,"../src/json/footballdata.json"));
+  const other = fs.readFileSync(path.join(__dirname,"../src/json/otherdata.json"));
   if (!fs.existsSync(dir)){
     fs.mkdirSync(dir);
   }
@@ -490,17 +495,17 @@ ipcMain.on('Backup', () => {
 //======================Recover Data=================
 ipcMain.on('RecoverBasketball', (event, data) => {
   const dataStr = JSON.stringify(data)
-  fs.writeFileSync("./src/json/basketballdata.json", dataStr);
+  fs.writeFileSync(path.join(__dirname,"../src/json/basketballdata.json"), dataStr);
 });
 ipcMain.on('RecoverBaseball', (event, data) => {
   const dataStr = JSON.stringify(data)
-  fs.writeFileSync("./src/json/baseballdata.json", dataStr);
+  fs.writeFileSync(path.join(__dirname,"../src/json/baseballdata.json"), dataStr);
 });
 ipcMain.on('RecoverFootball', (event, data) => {
   const dataStr = JSON.stringify(data)
-  fs.writeFileSync("./src/json/footballdata.json", dataStr);
+  fs.writeFileSync(path.join(__dirname,"../src/json/footballdata.json"), dataStr);
 });
 ipcMain.on('RecoverOther', (event, data) => {
   const dataStr = JSON.stringify(data)
-  fs.writeFileSync("./src/json/otherdata.json", dataStr);
+  fs.writeFileSync(path.join(__dirname,"../src/json/otherdata.json"), dataStr);
 });
