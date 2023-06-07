@@ -23,20 +23,31 @@ function DataExport() {
          <Card
         class="dashboard"
         header="DATA PRINT EXPORT"
-        title="Export Full Price Lists to PDF"
+        title="Export Full Price Data Lists"
         body={(
             <>
-            <div className='container-fluid'></div>
-            <button onClick={printBasketball} className='btn btn-outline-dark'>Export Basketball Price Data</button>
-            <button onClick={printBaseball} className='btn btn-outline-dark'>Export Baseball Price Data</button>
-            <button onClick={printFootball} className='btn btn-outline-dark'>Export Football Price Data</button>
-            <button onClick={printOther} className='btn btn-outline-dark'>Export Other Price Data</button>
+            <div className='container-fluid'>
+                <div className='row'>
+                    <div className='col'>
+                        <button onClick={printBasketball} className='print btn btn-outline-danger'>Export Basketball Prices PDF</button><br />
+                        <button onClick={printBaseball} className='print btn btn-outline-danger'>Export Baseball Prices PDF</button><br />
+                        <button onClick={printFootball} className='print btn btn-outline-danger'>Export Football Prices PDF</button><br />
+                        <button onClick={printOther} className='print btn btn-outline-danger'>Export Other Prices PDF</button><br />
+                    </div>
+                    <div className='col'>
+                        <button onClick={printBasketball} className='print btn btn-outline-success'>Export Basketball Prices CSV</button><br />
+                        <button onClick={printBaseball} className='print btn btn-outline-success'>Export Baseball Prices CSV</button><br />
+                        <button onClick={printFootball} className='print btn btn-outline-success'>Export Football Prices CSV</button><br />
+                        <button onClick={printOther} className='print btn btn-outline-success'>Export Other Prices CSV</button><br />
+                    </div>
+                </div>
+            </div>
             </>
         )}
         />
         <br/>
             <Card 
-                class="editor overflow-x-scroll"
+                class="editor overflow-x-scroll" CSV
                 header="PRINT PRICE DATA SELECTOR"
                 title="Select the Products you want to print"
                 body={(<PrintSelector/>)}

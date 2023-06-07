@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 function Editor() {
 const [editData, setEditData] = useState([]);
-    
+
 useEffect(() => {
     console.log(editData)
     document.getElementById('pname').value = editData.map((i) => {return i.name});
@@ -42,46 +42,48 @@ useEffect(() => {
         if(document.getElementById('type').value === 'Other') {
             window.saveOtherApi.saveData(product);
         }
-        alert('Entry Submitted')
+        // alert('Entry Submitted');
+        sessionStorage.setItem('alerts', JSON.stringify({"page": "Editor","message":`${product.name} has been added to the database`,"id":"added"}));
+        window.location.reload(false);
     }
 
     return (
         <>
-        <Card
-            class="editor-input overflow-x-scroll"
-            header="DATA ENTRY"
-            text=""
-            body={(
-                <>
-                    <form>
-                        <select id="type" required className="form-select">
-                            <option value="">Select Sport</option>
-                            <option id="basketball" value="Basketball">Basketball</option>
-                            <option id="baseball" value="Baseball">Baseball</option>
-                            <option id="football" value="Football">Football</option>
-                            <option id="other" value="Other">Other</option>
-                        </select>
-                        <label>Enter Product Name</label>
-                        <input id="pname" type='text' placeholder='Product Name' className='form-control' required /><br/>
-                        Enter Product URLs
-                        <input id='dandp' type="text" placeholder='D&P Cards url' className='form-control'/>
-                        <input id='blowout' type="text" placeholder='Blowout Cards url' className='form-control'/>
-                        <input id='dave' type="text" placeholder='Dave & Adams Cards url' className='form-control'/>
-                        <input id='steel' type="text" placeholder='Steel City Cards url' className='form-control'/>
-                        <input id='rbi' type="text" placeholder='RBI Cru7 Cards url' className='form-control'/>
+            <Card
+                class="editor-input overflow-x-scroll"
+                header="DATA ENTRY"
+                text=""
+                body={(
+                    <>
+                        <form>
+                            <select id="type" required className="form-select">
+                                <option value="">Select Sport</option>
+                                <option id="basketball" value="Basketball">Basketball</option>
+                                <option id="baseball" value="Baseball">Baseball</option>
+                                <option id="football" value="Football">Football</option>
+                                <option id="other" value="Other">Other</option>
+                            </select>
+                            <label>Enter Product Name</label>
+                            <input id="pname" type='text' placeholder='Product Name' className='form-control' required /><br/>
+                            Enter Product URLs
+                            <input id='dandp' type="text" placeholder='D&P Cards url' className='form-control'/>
+                            <input id='blowout' type="text" placeholder='Blowout Cards url' className='form-control'/>
+                            <input id='dave' type="text" placeholder='Dave & Adams Cards url' className='form-control'/>
+                            <input id='steel' type="text" placeholder='Steel City Cards url' className='form-control'/>
+                            <input id='rbi' type="text" placeholder='RBI Cru7 Cards url' className='form-control'/>
+                            <br/>
+                            <button id='entrysubmit' type='submit' onClick={dataSend} className='btn btn-outline-danger'>Submit</button> 
+                        </form>
                         <br/>
-                        <button id='entrysubmit' type='submit' onClick={dataSend} className='btn btn-outline-danger'>Submit</button>
-                    </form>
-                    <br/>
-                </>
-            )}
-        />
-        <br/>
-        <Card 
-            class="editor overflow-x-scroll"
-            header="DATA EDITOR"
-            body={(<DataEditor setEditData={setEditData}/>)}
-        />
+                    </>
+                )}
+            />
+            <br/>
+            <Card 
+                class="editor overflow-x-scroll"
+                header="DATA EDITOR"
+                body={(<DataEditor setEditData={setEditData}/>)}
+            />
         </> 
     )
 }

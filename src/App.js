@@ -9,11 +9,12 @@ import dplogo from './images/dplogo.png';
 import DataExport from './components/PrintData';
 import Backup from './components/Backup ';
 import Help from './components/Help';
+import Alerts from './components/Alerts';
 
-const App = () => {
-
+const App = () => { 
     return (
         <HashRouter>
+            <Alerts/>
             <div className='container-fluid'>
                 <div className='row'>
                     <div className='col-sm-2 fixed-top one'>

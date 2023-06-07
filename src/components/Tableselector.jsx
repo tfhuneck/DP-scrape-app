@@ -73,7 +73,8 @@ const Table = ({dataset, title,}) => {
     return (
         <>
         <div className="search">
-        <button onClick={printSelected} className='btn btn-outline-danger'>Export Selected Data</button> &nbsp; &nbsp;
+        <button onClick={printSelected} className='btn btn-outline-danger'>Export Selected PDF</button> &nbsp; &nbsp;
+        <button onClick={printSelected} className='btn btn-outline-success'>Export Selected CSV</button> &nbsp; &nbsp;
             <input className="form-control search" type="text" placeholder="Search Products" value={searchValue} onChange={handleSearch}/>
         </div>
         <h1 id='title'>{title}</h1>

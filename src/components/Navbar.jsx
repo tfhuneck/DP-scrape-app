@@ -1,18 +1,18 @@
 import '../index.css';
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-var activeState = JSON.parse(localStorage.getItem('active'));
+var activeState = JSON.parse(sessionStorage.getItem('active'));
 
  
 function Navbar() {
     const [active, setActive] = useState('dashboard')
 
     useEffect(() => {
-        setActive(activeState);
+        if(activeState){setActive(activeState);}
         }, []);
     
     useEffect(() => {
-        localStorage.setItem('active', JSON.stringify(active));
+        sessionStorage.setItem('active', JSON.stringify(active));
         }, [active]);
 
     const Navbutton = ({id, to, title}) => {
