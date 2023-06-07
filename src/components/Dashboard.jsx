@@ -51,7 +51,10 @@ function Dashboard() {
         await window.scrapeFootballApi.scrapeFootball()
         .then((res) => {
             setDisplayLoading(false);
-            alert(res)})
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${res}`,"id":"Dash"}));
+            // alert(res)
+            window.location.reload(false);
+        })
             .catch((error) =>{
             setDisplayLoading(false);
             alert(error)})

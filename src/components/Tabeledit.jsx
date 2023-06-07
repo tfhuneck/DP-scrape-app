@@ -49,7 +49,9 @@ const Table = ({dataset, title, setEditData}) => {
         if(document.getElementById('title').innerText === 'Other') {
             window.deleteOtherApi.deleteData(filtered);
         };
-        alert('Item deleted');
+        window.location.reload(false);
+        // alert('Item deleted');
+        sessionStorage.setItem('alerts', JSON.stringify({"page": "Editor","message":`${data.name} has been deleted from the database`,"id":"deleted"}));
         window.location.reload(false);
     }
 
