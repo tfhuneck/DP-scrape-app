@@ -198,4 +198,10 @@ h6{
 .print{
   width: 20em;
 }
-
+#warning{
+  color: crimson;
+  display: none;
+}
+.print-btns{
+  text-align: center;
+}

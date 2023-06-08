@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Table from './Tableselector';
+const activeTable = JSON.parse(sessionStorage.getItem('table'));
 
 function PrintSelector() {
     const [basketballdata, setBasketballdata] = useState([]);
@@ -7,6 +8,41 @@ function PrintSelector() {
     const [footballdata, setFootballdata] = useState([]);
     const [otherdata, setOtherdata] = useState([]);
     const [displayTable, setDisplayTable] = useState('Basketball');
+
+    useEffect(() => {
+        if(activeTable){setDisplayTable(activeTable);}
+        }, []);
+    
+    useEffect(() => {
+        sessionStorage.setItem('table', JSON.stringify(displayTable));
+        }, [displayTable]);
+
+    useEffect(() => {
+        const basketballBtn = document.getElementById('basketballbtn')
+        const baseballBtn = document.getElementById('baseballbtn')
+        const footballBtn = document.getElementById('footballbtn')
+        const otherBtn = document.getElementById('otherbtn')
+        if (basketballBtn.innerHTML === displayTable){
+            basketballBtn.className = 'btn btn-outline-dark active'
+        }else{
+            basketballBtn.className = 'btn btn-outline-dark'
+        }
+        if (baseballBtn.innerHTML === displayTable){
+            baseballBtn.className = 'btn btn-outline-dark active'
+        }else{
+            baseballBtn.className = 'btn btn-outline-dark'
+        }
+        if (footballBtn.innerHTML === displayTable){
+            footballBtn.className = 'btn btn-outline-dark active'
+        }else{
+            footballBtn.className = 'btn btn-outline-dark'
+        }
+        if (otherBtn.innerHTML === displayTable){
+            otherBtn.className = 'btn btn-outline-dark active'
+        }else{
+            otherBtn.className = 'btn btn-outline-dark'
+        }
+    }, [displayTable]);
 
     function refreshPage() {
         window.location.reload(false);
@@ -102,10 +138,10 @@ function PrintSelector() {
         <br/>
             <div className='container-fluid'>
                     <div className="btn-group">
-                            <button onClick={changeTable} className="btn btn-outline-dark">Basketball</button>
-                            <button onClick={changeTable} className="btn btn-outline-dark">Baseball</button>
-                            <button onClick={changeTable} className="btn btn-outline-dark">Football</button>
-                            <button onClick={changeTable} className="btn btn-outline-dark">Other</button>
+                    <button id='basketballbtn' onClick={changeTable} className="btn btn-outline-dark">Basketball</button>
+                        <button id='baseballbtn' onClick={changeTable} className="btn btn-outline-dark">Baseball</button>
+                        <button id='footballbtn' onClick={changeTable} className="btn btn-outline-dark">Football</button>
+                        <button id='otherbtn' onClick={changeTable} className="btn btn-outline-dark">Other</button>
                     </div>
                     <button className='btn btn-outline-dark refresh' onClick={refreshPage}>Refresh Table</button>
                 <br/><br/>

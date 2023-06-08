@@ -19,7 +19,13 @@ useEffect(() => {
     
 //=======Function that sends data via Bridge to electron.js to be saved to data.json=========
     const dataSend = (event)=> {
-        // event.preventDefault();
+        event.preventDefault();
+        const select = document.getElementById('type');
+        const warning = document.getElementById('warning');
+        if(select.value === '' ){
+            warning.style.display = 'block';
+            return 
+        }
         let product = {
             name: document.getElementById('pname').value,
             dandp: document.getElementById('dandp').value,
@@ -44,7 +50,7 @@ useEffect(() => {
         }
         // alert('Entry Submitted');
         sessionStorage.setItem('alerts', JSON.stringify({"page": "Editor","message":`${product.name} has been added to the database`,"id":"added"}));
-        window.location.reload(false);
+        window.location.reload();
     }
 
     return (
@@ -72,7 +78,8 @@ useEffect(() => {
                             <input id='steel' type="text" placeholder='Steel City Cards url' className='form-control'/>
                             <input id='rbi' type="text" placeholder='RBI Cru7 Cards url' className='form-control'/>
                             <br/>
-                            <button id='entrysubmit' type='submit' onClick={dataSend} className='btn btn-outline-danger'>Submit</button> 
+                            <div id='warning'>! Select Sport Category to Submit Data !</div><br />
+                            <button id='entrysubmit' type='submit' onClick={dataSend} className='btn btn-outline-danger'>Submit</button>
                         </form>
                         <br/>
                     </>

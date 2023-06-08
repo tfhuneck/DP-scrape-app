@@ -43,13 +43,13 @@ function DataExport() {
             <>
             <div className='container-fluid'>
                 <div className='row'>
-                    <div className='col'>
+                    <div className='col print-btns'>
                         <button onClick={printBasketball} className='print btn btn-outline-danger'>Export Basketball Prices PDF</button><br />
                         <button onClick={printBaseball} className='print btn btn-outline-danger'>Export Baseball Prices PDF</button><br />
                         <button onClick={printFootball} className='print btn btn-outline-danger'>Export Football Prices PDF</button><br />
                         <button onClick={printOther} className='print btn btn-outline-danger'>Export Other Prices PDF</button><br />
                     </div>
-                    <div className='col'>
+                    <div className='col print-btns'>
                         <button onClick={printBasketballCsv} className='print btn btn-outline-success'>Export Basketball Prices CSV</button><br />
                         <button onClick={printBaseballCsv} className='print btn btn-outline-success'>Export Baseball Prices CSV</button><br />
                         <button onClick={printFootballCsv} className='print btn btn-outline-success'>Export Football Prices CSV</button><br />
