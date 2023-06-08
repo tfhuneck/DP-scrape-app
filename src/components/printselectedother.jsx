@@ -64,7 +64,6 @@ function PrintSelected() {
                                     <tr key={key}>
                                         <td className='pname'>{data.name}</td>
                                         <td className='data-list'>{data.dandp}</td>
-                                        <td className='data-list'>{data.blowout}</td>
                                     </tr>
                                 </>  
                             )
