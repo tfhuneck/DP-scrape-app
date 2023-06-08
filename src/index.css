@@ -130,6 +130,7 @@ nav {
   overflow-x: auto;
 }
 table tbody td{
+  overflow-y:hidden;
   border: none;
 }
 table thead th:first-child {
@@ -145,6 +146,7 @@ table tbody tr:last-child td:last-child {
   border-radius: 0 0 10px 0;
 }
 td {
+  overflow-y:hidden;
   max-width: 0;
   overflow: scroll;
   white-space: nowrap;
