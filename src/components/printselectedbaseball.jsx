@@ -17,13 +17,39 @@ function PrintSelected() {
             console.error(error);
           });
     },[])
+
+     const makeCsv = () => {
+        var csv_data = [];
+        var rows = tableRef.current.getElementsByTagName("tr");
+        console.log(rows);
+        for (var i = 0; i < rows.length; i++) {
+            var cols = rows[i].querySelectorAll("th, td");
+            console.log(cols);
+            var csvrow = [];
+            for (var n = 0; n < cols.length; n++) {
+            csvrow.push(cols[n].innerHTML);
+            }
+            csv_data.push(csvrow.join(","));
+        }
+        csv_data = csv_data.join("\n");
+        console.log(csv_data);
+        window.selectedBaseballCsvApi.sendCsv(csv_data);
+    };
+  
+    const tableRef = React.useRef(null);
+  
+    React.useEffect(() => {
+      if (tableRef.current) {
+        setTimeout(makeCsv, 2000);
+      }
+    }, [tableRef]);
     
     return (
         <div className="price-menu">
             <img src='./images/dplogo.png' className='dplogo img-fluid' />
             <img src='./images/socials.png' className='socials img-fluid'/>
             <h2>Baseball Products Price List</h2>
-            <table className='table table-light table-striped'>
+            <table ref={tableRef} className='table table-light table-striped'>
                 <thead>
                     <tr>
                         <th scope="col">Product Name</th>

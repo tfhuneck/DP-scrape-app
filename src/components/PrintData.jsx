@@ -5,6 +5,7 @@ import PrintSelector from './PrintSelector';
 
 function DataExport() {
 
+    // =============Export PDF Data===============
     const printBasketball = () => {
         window.printBasketballApi.printData()
     }
@@ -16,6 +17,20 @@ function DataExport() {
     }
     const printOther = () => {
         window.printOtherApi.printData()
+    }
+
+    // ===============Export to CSV==============
+    const printBasketballCsv = () => {
+        window.printBasketballCsvApi.printData()
+    }
+    const printBaseballCsv = () => {
+        window.printBaseballCsvApi.printData()
+    }
+    const printFootballCsv = () => {
+        window.printFootballCsvApi.printData()
+    }
+    const printOtherCsv = () => {
+        window.printOtherCsvApi.printData()
     }
 
     return (
@@ -35,10 +50,10 @@ function DataExport() {
                         <button onClick={printOther} className='print btn btn-outline-danger'>Export Other Prices PDF</button><br />
                     </div>
                     <div className='col'>
-                        <button onClick={printBasketball} className='print btn btn-outline-success'>Export Basketball Prices CSV</button><br />
-                        <button onClick={printBaseball} className='print btn btn-outline-success'>Export Baseball Prices CSV</button><br />
-                        <button onClick={printFootball} className='print btn btn-outline-success'>Export Football Prices CSV</button><br />
-                        <button onClick={printOther} className='print btn btn-outline-success'>Export Other Prices CSV</button><br />
+                        <button onClick={printBasketballCsv} className='print btn btn-outline-success'>Export Basketball Prices CSV</button><br />
+                        <button onClick={printBaseballCsv} className='print btn btn-outline-success'>Export Baseball Prices CSV</button><br />
+                        <button onClick={printFootballCsv} className='print btn btn-outline-success'>Export Football Prices CSV</button><br />
+                        <button onClick={printOtherCsv} className='print btn btn-outline-success'>Export Other Prices CSV</button><br />
                     </div>
                 </div>
             </div>

@@ -31,53 +31,80 @@ function Dashboard() {
         await window.scrapeBasketballApi.scrapeBasketball()
             .then((res) => {
             setDisplayLoading(false);
-            alert(res)})
+            // alert(res)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${res}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
             .catch((error) =>{
             setDisplayLoading(false);
-            alert(error)})
+            // alert(error)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${error}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
     }
     async function baseball(){
          setDisplayLoading(true)
         await window.scrapeBaseballApi.scrapeBaseball()
         .then((res) => {
             setDisplayLoading(false);
-            alert(res)})
+            // alert(res)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${res}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
             .catch((error) =>{
             setDisplayLoading(false);
-            alert(error)})
+            // alert(error)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${error}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
     }
     async function football(){
         setDisplayLoading(true)
         await window.scrapeFootballApi.scrapeFootball()
         .then((res) => {
             setDisplayLoading(false);
-            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${res}`,"id":"Dash"}));
             // alert(res)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${res}`,"id":"Dash"}));
             window.location.reload(false);
-        })
+            })
             .catch((error) =>{
             setDisplayLoading(false);
-            alert(error)})
+            // alert(error)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${error}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
     }
     async function other(){
         setDisplayLoading(true)
         await window.scrapeOtherApi.scrapeOther()
         .then((res) => {
             setDisplayLoading(false);
-            alert(res)})
+            // alert(res)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${res}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
             .catch((error) =>{
             setDisplayLoading(false);
-            alert(error)})
+            // alert(error)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${error}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
     }
     async function all(){
         setDisplayLoading(true)
         await window.scrapeAllApi.scrapeAll()
         .then((res) => {
             setDisplayLoading(false);
-            alert(res)})
+            // alert(res)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${res}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
             .catch((error) =>{
             setDisplayLoading(false);
-            alert(error)})
+            // alert(error)
+            sessionStorage.setItem('alerts', JSON.stringify({"page": "Dashboard","message":`${error}`,"id":"Dash"}));
+            window.location.reload(false);
+            })
     }
 
     const ShowLoading = () =>{
