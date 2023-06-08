@@ -69,12 +69,26 @@ const Table = ({dataset, title,}) => {
             window.printSelectedOtherApi.printData(e, isCheck);
         };
     }
+    const printSelectedCsv = (e) => {
+        if(document.getElementById('title').innerText === 'Basketball') {
+            window.printSelectedBasketballCsvApi.printData(e, isCheck);
+        }
+        if(document.getElementById('title').innerText === 'Baseball') {
+            window.printSelectedBaseballCsvApi.printData(e, isCheck);
+        }
+        if(document.getElementById('title').innerText === 'Football') {
+            window.printSelectedFootballCsvApi.printData(e, isCheck);
+        }
+        if(document.getElementById('title').innerText === 'Other') {
+            window.printSelectedOtherCsvApi.printData(e, isCheck);
+        };
+    }
 
     return (
         <>
         <div className="search">
         <button onClick={printSelected} className='btn btn-outline-danger'>Export Selected PDF</button> &nbsp; &nbsp;
-        <button onClick={printSelected} className='btn btn-outline-success'>Export Selected CSV</button> &nbsp; &nbsp;
+        <button onClick={printSelectedCsv} className='btn btn-outline-success'>Export Selected CSV</button> &nbsp; &nbsp;
             <input className="form-control search" type="text" placeholder="Search Products" value={searchValue} onChange={handleSearch}/>
         </div>
         <h1 id='title'>{title}</h1>

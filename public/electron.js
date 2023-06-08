@@ -244,7 +244,7 @@ const getDPPrice = async (url) => {
     const htmlData = res.data;
     const $ = cheerio.load(htmlData);
     const $price = $('#ProductPrice-product-template', htmlData).text();
-    const price = $price.replaceAll(/\s/g,'');
+    const price = $price.replaceAll(/\s|,/g,'');
     mainWindow.webContents.send('asynchronous-message', 'D&P Cards price: ' + price);
     dandpPrices.push(price);    
   })
@@ -267,9 +267,10 @@ const getBlowoutPrice = async (url) => {
   .then(async () => {
     let $price = await driver.findElement(By.className('price-box'));
     let price = await $price.findElement(By.className('price')).getText();
+    const formatPrice = price.replaceAll(/,/g,'');
         // const price = $price.split();
     mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Price: ' + price);
-    blowoutPrices.push(price); 
+    blowoutPrices.push(formatPrice); 
     }) 
   .catch(function (error) {
       // handle error
@@ -287,7 +288,7 @@ const getDavePrice = async (url) => {
     const htmlData = res.data;
     const $ = cheerio.load(htmlData);
     const $price = $('table.item-pricing', htmlData).find('strong.price').text();
-    const price = $price.replaceAll(/\s/g,'');
+    const price = $price.replaceAll(/\s|,/g,'');
     mainWindow.webContents.send('asynchronous-message', 'Dave & Adams Price: ' + price);
     davePrices.push(price);
   })
@@ -307,7 +308,8 @@ const getSteelPrice = async (url) => {
     const htmlData = res.data;
     const $ = cheerio.load(htmlData);
     const $price = $('.p-price', htmlData).children('span').text();
-    const price = $price.split('$');
+    const formatPrice = $price.replaceAll(/,/g,'');
+    const price = formatPrice.split('$');
     // priceArray.push($price);
     if (price.length >=2 ) {
         price.splice(1,1);
@@ -336,7 +338,7 @@ const getRbiPrice = async (url) => {
     const htmlData = res.data;
     const $ = cheerio.load(htmlData);
     const $price = $('#ProductPrice-product-template', htmlData).text();
-    const price = $price.replaceAll(/\s/g,'');
+    const price = $price.replaceAll(/\s|,/g,'');
     mainWindow.webContents.send('asynchronous-message', 'RBI Cru7 Price: ' + price);
     rbiPrices.push(price);
   })
@@ -389,13 +391,13 @@ await executeScrape()
  .catch((error) => mainWindow.webContents.send('asynchronous-message', error))
 }
 
-//=====================Printing Data======================
+//=====================Printing Data to PDF======================
 const printToPdf = async (url, fileName) => {
   const win = new BrowserWindow({
     width: 900,
     height: 900,
     maximized: false,
-    title: "Print Basketball",
+    title: "Print to PDF",
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
@@ -415,6 +417,33 @@ const printToPdf = async (url, fileName) => {
   }) 
 };
 
+//=====================Printing Data to CSV======================
+const printToCsv = async (url, fileName, dataApi) => {
+  const win = new BrowserWindow({
+    width: 900,
+    height: 900,
+    maximized: false,
+    title: "Print to CSV",
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, "./preload.js")
+    }, 
+  });
+  const htmlPath = path.join(__dirname, url);
+  const csvPath = path.join(os.homedir(), 'Desktop', fileName);
+  await win.loadFile(htmlPath)
+  .then(() => { ipcMain.on(dataApi, (event, data) => {
+      setTimeout(() => {
+      fs.writeFile(csvPath, data, (error) => {
+        console.log('Write CSV succesfully');
+        dialog.showErrorBox(fileName,'saved to Desktop');
+      })
+    }, 2000) 
+  })})
+};
+
+// ================Printing to PDF================
 // =================Printing Basketball=============
 ipcMain.on('printBasketball', async () => {
   printToPdf('../src/printBasketball.html','Basketball_Prices.pdf')
@@ -432,13 +461,31 @@ ipcMain.on('printOther', async () => {
   printToPdf('../src/printOther.html','Other_Prices.pdf')
 });
 
+// ================Printing to CSV================
+// =================Printing Basketball=============
+ipcMain.on('printBasketballCsv', async () => {
+  printToCsv('../src/printBasketball.html','Basketball_Prices.csv', 'sendBasketballCsv')
+});
+// =================Printing Baseball=============
+ipcMain.on('printBaseballCsv', async () => {
+  printToCsv('../src/printBaseball.html','Baseball_Prices.csv', 'sendBaseballCsv')
+});
+// =================Printing Football=============
+ipcMain.on('printFootballCsv', async () => {
+  printToCsv('../src/printFootball.html','Football_Prices.csv', 'sendFootballCsv')
+});
+// =================Printing Other=============
+ipcMain.on('printOtherCsv', async () => {
+  printToCsv('../src/printOther.html','Other_Prices.csv', 'sendOtherCsv')
+});
+
 //==================Print Selected==================
 // =================Get Selected Data to Filter=============
 ipcMain.handle('getSelected', (event, arg) => {
   const response = JSON.parse(fs.readFileSync(path.join(__dirname, "../src/json/selectedData.json")));
   return response;
 })
-// =================Printing Selected Function=============
+// =================Printing Selected Function PDF=============
 const printSelected = (data, pricedata, printUrl, printPdf) => {
   const readData = fs.readFileSync(pricedata);
   const parsedData = JSON.parse(readData);
@@ -454,22 +501,57 @@ const printSelected = (data, pricedata, printUrl, printPdf) => {
   fs.writeFileSync(path.join(__dirname,"../src/json/selectedData.json"), dataStr)
   printToPdf(printUrl, printPdf);
 }
-//=====================Print Selected Basketball==================
+//=====================Print Selected Basketball PDF==================
 ipcMain.on('printSelectedBasketball', (event, data) => {
   printSelected(data, path.join(__dirname,'../src/json/basketballscraped.json'), '../src/printSelectedBasketball.html', 'Selected_Pricelist_Basketball.pdf')
 });
-//=====================Print Selected Baseball==================
+//=====================Print Selected Baseball PDF==================
 ipcMain.on('printSelectedBaseball', (event, data) => {
   printSelected(data, path.join(__dirname,'../src/json/baseballscraped.json'), '../src/printSelectedbaseball.html', 'Selected_Pricelist_Baseball.pdf')
 });
-//=====================Print Selected Football==================
+//=====================Print Selected Football PDF==================
 ipcMain.on('printSelectedFootball', (event, data) => {
   printSelected(data, path.join(__dirname,'../src/json/footballscraped.json'), '../src/printSelectedFootball.html', 'Selected_Pricelist_Football.pdf')
 });
-//=====================Print Selected Other==================
+//=====================Print Selected Other PDF==================
 ipcMain.on('printSelectedOther', (event, data) => {
   printSelected(data, path.join(__dirname,'../src/json/otherscraped.json'), '../src/printSelectedOther.html', 'Selected_Pricelist_Other.pdf')
 });
+
+// =================Export selection to CSV=================
+// =================Printing Selected Function CSV=============
+const printSelectedCsv = (data, pricedata, printUrl, printCsv, dataApi) => {
+  const readData = fs.readFileSync(pricedata);
+  const parsedData = JSON.parse(readData);
+  console.log(data)
+  // console.log(parsedData)
+    let selected = parsedData.filter((el) => {
+      return data.some((f) => {
+        return el.name == f;
+      }) 
+    })
+  console.log(selected)
+  let dataStr = JSON.stringify(selected)
+  fs.writeFileSync(path.join(__dirname,"../src/json/selectedData.json"), dataStr)
+  printToCsv(printUrl, printCsv, dataApi);
+}
+//=====================Print Selected Basketball CSV==================
+ipcMain.on('printSelectedBasketballCsv', (event, data) => {
+  printSelectedCsv(data, path.join(__dirname,'../src/json/basketballscraped.json'), '../src/printSelectedBasketball.html', 'Selected_Pricelist_Basketball.csv', 'selectedBasketballCsv')
+});
+//=====================Print Selected Baseball CSV==================
+ipcMain.on('printSelectedBaseballCsv', (event, data) => {
+  printSelectedCsv(data, path.join(__dirname,'../src/json/baseballscraped.json'), '../src/printSelectedbaseball.html', 'Selected_Pricelist_Baseball.csv', 'selectedBaseballCsv')
+});
+//=====================Print Selected Football CSV==================
+ipcMain.on('printSelectedFootballCsv', (event, data) => {
+  printSelectedCsv(data, path.join(__dirname,'../src/json/footballscraped.json'), '../src/printSelectedFootball.html', 'Selected_Pricelist_Football.csv', 'selectedFootballCsv')
+});
+//=====================Print Selected Other CSV==================
+ipcMain.on('printSelectedOtherCsv', (event, data) => {
+  printSelectedCsv(data, path.join(__dirname,'../src/json/otherscraped.json'), '../src/printSelectedOther.html', 'Selected_Pricelist_Other.csv', 'selectedOtherCsv')
+});
+
 
 //===================Back Up All Data=============
 ipcMain.on('Backup', () => {

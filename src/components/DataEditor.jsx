@@ -106,7 +106,7 @@ function DataEditor({setEditData}) {
                         <button onClick={changeTable} className="btn btn-outline-dark">Other</button>
                 </div>
                 <button className='btn btn-outline-dark refresh' onClick={refreshPage}>Refresh Table</button>
-               <br/><br/>
+                <br/><br/>
                     <BasketballTable/>
                     <BaseballTable/>
                     <FootballTable/>

@@ -144,6 +144,42 @@ contextBridge.exposeInMainWorld('printOtherApi', {
   printData: () => ipcRenderer.send('printOther')
 })
 
+// ============Sending CSV data to Main===========
+// ============Sending Basketball CSV data=============
+contextBridge.exposeInMainWorld('saveBasketballCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('sendBasketballCsv', data) 
+})
+// ============Sending Baseball CSV data=============
+contextBridge.exposeInMainWorld('saveBaseballCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('sendBaseballCsv', data) 
+})
+// ============Sending Football CSV data=============
+contextBridge.exposeInMainWorld('saveFootballCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('sendFootballCsv', data) 
+})
+// ============Sending Other CSV data=============
+contextBridge.exposeInMainWorld('saveOtherCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('sendOtherCsv', data) 
+})
+
+// =============Printing to CSV and Saving Data=========
+//==============Printing Basketball================
+contextBridge.exposeInMainWorld('printBasketballCsvApi', {
+  printData: () => ipcRenderer.send('printBasketballCsv')
+})
+//==============Printing Baseball================
+contextBridge.exposeInMainWorld('printBaseballCsvApi', {
+  printData: () => ipcRenderer.send('printBaseballCsv')
+})
+//==============Printing Baseball================
+contextBridge.exposeInMainWorld('printFootballCsvApi', {
+  printData: () => ipcRenderer.send('printFootballCsv')
+})
+//==============Printing Baseball================
+contextBridge.exposeInMainWorld('printOtherCsvApi', {
+  printData: () => ipcRenderer.send('printOtherCsv')
+})
+
 //==============Printing Selected Data==================
 //===============Get Selected Data to Filter==============
 contextBridge.exposeInMainWorld('getSelectedApi', {
@@ -151,22 +187,57 @@ contextBridge.exposeInMainWorld('getSelectedApi', {
     return result;
   })
 })
-//==============Printing Selected Basketball================
+//==============Printing Selected Basketball PDF================
 contextBridge.exposeInMainWorld('printSelectedBasketballApi', {
   printData: (channel, data) => ipcRenderer.send('printSelectedBasketball', data)
 })
-//==============Printing Selected Baseball================
+//==============Printing Selected Baseball PDF================
 contextBridge.exposeInMainWorld('printSelectedBaseballApi', {
   printData: (channel, data) => ipcRenderer.send('printSelectedBaseball', data)
 })
-//==============Printing Selected Football================
+//==============Printing Selected Football PDF================
 contextBridge.exposeInMainWorld('printSelectedFootballApi', {
   printData: (channel, data) => ipcRenderer.send('printSelectedFootball', data)
 })
-//==============Printing Selected Other================
+//==============Printing Selected Other PDF================
 contextBridge.exposeInMainWorld('printSelectedOtherApi', {
   printData: (channel, data) => ipcRenderer.send('printSelectedOther', data)
 })
+
+// ============Sending Selected CSV data to Main===========
+// ============Sending Basketball CSV data=============
+contextBridge.exposeInMainWorld('selectedBasketballCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('selectedBasketballCsv', data) 
+})
+// ============Sending Baseball CSV data=============
+contextBridge.exposeInMainWorld('selectedBaseballCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('selectedBaseballCsv', data) 
+})
+// ============Sending Football CSV data=============
+contextBridge.exposeInMainWorld('selectedFootballCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('selectedFootballCsv', data) 
+})
+// ============Sending Other CSV data=============
+contextBridge.exposeInMainWorld('selectedOtherCsvApi', {
+  sendCsv: (data) => ipcRenderer.send('selectedOtherCsv', data) 
+})
+//==============Printing Selected Basketball CSV================
+contextBridge.exposeInMainWorld('printSelectedBasketballCsvApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedBasketballCsv', data)
+})
+//==============Printing Selected Baseball CSV================
+contextBridge.exposeInMainWorld('printSelectedBaseballCsvApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedBaseballCsv', data)
+})
+//==============Printing Selected Football CSV================
+contextBridge.exposeInMainWorld('printSelectedFootballCsvApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedFootballCsv', data)
+})
+//==============Printing Selected Other CSV================
+contextBridge.exposeInMainWorld('printSelectedOtherCsvApi', {
+  printData: (channel, data) => ipcRenderer.send('printSelectedOtherCsv', data)
+})
+
 
 // ==================Backup all Data===================
 contextBridge.exposeInMainWorld('BackupApi', {
