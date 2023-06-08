@@ -193,7 +193,7 @@ ipcMain.handle('scrapeall', async (event, arg) => {
   await scrape(path.join(__dirname, "../src/json/baseballdata.json"), path.join(__dirname, "../src/json/baseballscraped.json"))
   await scrape(path.join(__dirname, "../src/json/footballdata.json"), path.join(__dirname, "../src/json/footballscraped.json"))
   await scrape(path.join(__dirname, "../src/json/otherdata.json"), path.join(__dirname, "../src/json/otherscraped.json"))
-  return 'All Scrapes are Complete. All Price Data was updated.)' 
+  return 'All Scrapes are Complete. All Price Data was updated.' 
 });
 
 //=========Main Scrape function===========
