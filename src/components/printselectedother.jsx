@@ -54,7 +54,6 @@ function PrintSelected() {
                     <tr>
                         <th scope="col">Product Name</th>
                         <th scope="col">Our Price</th>
-                        <th scope="col">Competitors</th>
                     </tr>
                 </thead>
                 <tbody>
