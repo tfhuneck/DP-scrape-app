@@ -41,8 +41,8 @@ function createWindow() {
       preload: path.join(__dirname, "./preload.js")
     }, 
   });
-  // mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
-  mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
+  // mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
   mainWindow.on('closed', function () {
     mainWindow = null
   })
@@ -259,27 +259,42 @@ const getDPPrice = async (url) => {
 }
 //==========Blowout Scrape=========
 const getBlowoutPrice = async (url) => {
-  let driver = new Builder()
-    .forBrowser('chrome')
-    .setChromeOptions(new chrome.Options().headless())
-    .build();
-  await driver.get(url)
-  .then(async () => {
-    let $price = await driver.findElement(By.className('price-box'));
-    let price = await $price.findElement(By.className('price')).getText();
-    const formatPrice = price.replaceAll(/,/g,'');
-        // const price = $price.split();
-    mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Price: ' + price);
-    blowoutPrices.push(formatPrice); 
-    }) 
-  .catch(function (error) {
-      // handle error
-      mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Error: ' + error);
-      blowoutPrices.push('-');
-  })
-  .finally(async() => {
-      await driver.quit()
-  });   
+  try{
+    const options = new chrome.Options();
+    let driver = await new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(options.addArguments("--window-size=1920x1080").addArguments('--headless=new'))
+      // .setChromeOptions(new chrome.Options().headless())
+      .build();
+      // let iframe = await WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//iframe[@id='myIframe']")))
+      // driver.switch_to.frame(iframe)
+    await driver.get(url)
+     .then(async () => {
+      driver.takeScreenshot().then(function(data){
+        var base64Data = data.replace(/^data:image\/png;base64,/,"")
+        fs.writeFile("./out.png", base64Data, 'base64', function(err) {
+             if(err) console.log(err);
+        });
+     });
+      let $price = await driver.findElement(By.className('price-box'));
+      let price = await $price.findElement(By.className('price')).getText();
+      const formatPrice = price.replaceAll(/,/g,'');
+          // const price = $price.split();
+      mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Price: ' + price);
+      blowoutPrices.push(formatPrice); 
+      }) 
+    .catch(function (error) {
+        // handle error
+        mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Error: ' + error);
+        blowoutPrices.push('-');
+    })
+    .finally(async() => {
+        await driver.quit()
+    });   
+  }catch(err){
+    mainWindow.webContents.send('asynchronous-message', 'Blowout Cards Error: ' + err);
+    blowoutPrices.push('-');
+  }
 }
 //=============Dave&Adams Scrape=========
 const getDavePrice = async (url) => {
